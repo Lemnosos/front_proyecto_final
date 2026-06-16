@@ -11,7 +11,7 @@ export const useFetch = () => {
         setError(null)
         setData(null)
         try {
-            const res = await fetch(url, opciones)
+            const res = await fetch(url, { ...opciones, credentials: 'include' })
             const json = await res.json()
             if (!res.ok) {
                 setData(null)

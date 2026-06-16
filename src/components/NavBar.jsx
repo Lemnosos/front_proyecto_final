@@ -9,13 +9,14 @@ export const NavBar = () => {
     return (
         <nav>
             <ul className='nav flexContainer'>
-                <li>
-                    <NavLink
-                        to='/registro'
-                        className={({ isActive }) => isActive ? 'activo' : 'normal'}>
-                        Registro
-                    </NavLink>
-                </li>
+                {!isLogued &&
+                    <li>
+                        <NavLink
+                            to='/registro'
+                            className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                            Registro
+                        </NavLink>
+                    </li>}
                 {isLogued && usuario?.role === 'user' &&
                     <li>
                         <NavLink
@@ -24,14 +25,30 @@ export const NavBar = () => {
                             Info Usuario
                         </NavLink>
                     </li>}
-                {isLogued && usuario?.role === 'admin' &&
-                    <li>
-                        <NavLink
-                            to='/admin'
-                            className={({ isActive }) => isActive ? 'activo' : 'normal'}>
-                            Info Admin
-                        </NavLink>
-                    </li>}
+                {isLogued && usuario?.role === 'admin' && (
+                    <>
+                        <li>
+                            <NavLink to='/admin/enemigos' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Enemigos
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/admin/usuarios' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Usuarios
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/admin/historial' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Historial
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/admin/nuevoAdmin' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Nuevo Admin
+                            </NavLink>
+                        </li>
+                    </>
+                )}
                 {isLogued &&
                     <li className="logout-btn">
                         <button onClick={logOut}>Cerrar sesión</button>

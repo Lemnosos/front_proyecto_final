@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { UserContext } from './UserContext'
 import { useFetch } from '../hooks/useFetch'
-import { decodeJWT } from '../utils/gestionarToken'
 
 export const UserProvider = ({ children }) => {
     const navigate = useNavigate()
@@ -13,65 +12,54 @@ export const UserProvider = ({ children }) => {
     const { consultaApi, data, loading, error, clearFetch } = useFetch()
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (!token) return
-
-        fetch(`${BASE_URL}/public/renew`, {
-            headers: { 'Authorization': `Bearer ${token}` }
-        })
-            .then(res => res.json())
-            .then(json => {
-                if (!json.ok) return localStorage.removeItem('token')
-                const newToken = json.data.token
-                localStorage.setItem('token', newToken)
-                const { id, rol: role } = decodeJWT(newToken)
+        (async () => {
+            try {
+                const res = await fetch(`${BASE_URL}/public/renew`, {
+                    credentials: 'include'
+                })
+                const json = await res.json()
+                if (!json.ok) return
+                const { id, role } = json.data
                 setUsuario({ id, role })
                 setIsLogued(true)
-            })
-            .catch(() => localStorage.removeItem('token'))
+                navigate(role === 'admin' ? '/admin' : '/user')
+            } catch {
+                /* sin sesión activa */
+            }
+        })()
     }, [])
 
     const logIn = async (user) => {
         const options = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
+            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             body: JSON.stringify(user)
         }
         const res = await consultaApi(`${BASE_URL}/public`, options)
         if (!res?.ok) return
-        const { token } = res.data
-        localStorage.setItem('token', token)
-        const { id, rol: role } = decodeJWT(token)
+        const { id, role } = res.data
         setUsuario({ id, role })
         setIsLogued(true)
         navigate(role === 'admin' ? '/admin' : '/user')
     }
 
-    const logOut = () => {
+    const logOut = async () => {
+        await consultaApi(`${BASE_URL}/public/logout`, { method: 'POST' })
         clearFetch()
         setUsuario(null)
         setIsLogued(false)
-        localStorage.removeItem('token')
         navigate('/registro')
     }
 
     const register = async (user) => {
         const options = {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
+            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             body: JSON.stringify(user)
         }
         const res = await consultaApi(`${BASE_URL}/public/new`, options)
         if (!res?.ok) return
-        const { token } = res.data
-        localStorage.setItem('token', token)
-        const { id, rol: role } = decodeJWT(token)
+        const { id, role } = res.data
         setUsuario({ id, role })
         setIsLogued(true)
         navigate('/user')
