@@ -1,14 +1,26 @@
 .registerLayout {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     gap: 2.5rem;
 
-    >* {
+    > form {
         flex: .5;
+        min-width: 250px;
+    }
+
+    .auth-feedback {
+        flex: 0 0 100%;
     }
 }
 
 form ol {
     list-style-type: none;
     width: 90%;
+}
+
+.field-error {
+    color: #c33;
+    font-size: 0.8rem;
+    margin-left: 0.5rem;
 }

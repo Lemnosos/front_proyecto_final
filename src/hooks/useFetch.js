@@ -1,32 +1,38 @@
 import { useState } from 'react'
 
-export const useFetch = (url, opciones) => {
+export const useFetch = () => {
 
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
     const consultaApi = async (url, opciones) => {
-        let res
+        setLoading(true)
+        setError(null)
+        setData(null)
         try {
-            res = await fetch(url, opciones)
+            const res = await fetch(url, opciones)
+            const json = await res.json()
             if (!res.ok) {
                 setData(null)
-                setLoading(false)
-                setError(res.json())
-
+                setError(json)
             } else {
-                const json = await res.json()
                 setData(json)
-                setLoading(false)
                 setError(null)
             }
-        } catch (error) {
-            setData(null)
+            return json
+        } catch (err) {
+            setError(err)
+        } finally {
             setLoading(false)
-            setError(error)
         }
     }
 
-    return { data, loading, error, consultaApi }
+    const clearFetch = () => {
+        setData(null)
+        setError(null)
+        setLoading(false)
+    }
+
+    return { data, loading, error, consultaApi, clearFetch }
 }

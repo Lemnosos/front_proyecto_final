@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import './NavBar.scss'
 
 export const NavBar = () => {
-    const { usuario, isLogued } = useContext(UserContext)
+    const { usuario, isLogued, logOut } = useContext(UserContext)
 
     return (
         <nav>
@@ -31,6 +31,10 @@ export const NavBar = () => {
                             className={({ isActive }) => isActive ? 'activo' : 'normal'}>
                             Info Admin
                         </NavLink>
+                    </li>}
+                {isLogued &&
+                    <li className="logout-btn">
+                        <button onClick={logOut}>Cerrar sesión</button>
                     </li>}
             </ul>
         </nav>
