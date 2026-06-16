@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <main>
-        <h2>Bienvenido a Toratazos y mamporros</h2>
+        <h2>Bienvenido a Tortazos y mamporros</h2>
         <NavBar />
         <Rutas />
       </main>
