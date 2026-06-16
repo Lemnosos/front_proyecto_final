@@ -1,0 +1,14 @@
+.registerLayout {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5rem;
+
+    >* {
+        flex: .5;
+    }
+}
+
+form ol {
+    list-style-type: none;
+    width: 90%;
+}

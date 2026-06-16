@@ -1,0 +1,16 @@
+.activo {
+  background-color: green;
+  color: red;
+}
+
+.normal {
+  background-color: white;
+  color: black;
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
