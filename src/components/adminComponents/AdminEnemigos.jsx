@@ -37,7 +37,8 @@ export const AdminEnemigos = () => {
             ataque: String(enemigo.ataque),
             defensa: String(enemigo.defensa),
             velocidad: String(enemigo.velocidad),
-            tipo: enemigo.tipo
+            tipo: enemigo.tipo,
+            url: enemigo.url
         })
         setFormVisible(true)
     }
@@ -51,7 +52,7 @@ export const AdminEnemigos = () => {
             defensa: { required: true, message: 'La defensa es obligatoria' },
             velocidad: { required: true, message: 'La velocidad es obligatoria' },
             tipo: { required: true, message: 'El tipo es obligatorio' },
-            url: { required: true, message: 'El tipo es obligatorio' },
+            url: { required: true, message: 'La url es obligatorio' },
         })) return
 
         const payload = {
