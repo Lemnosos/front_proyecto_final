@@ -5,7 +5,7 @@ import { Feedback } from '../Feedback'
 import './AdminEnemigos.scss'
 
 export const AdminEnemigos = () => {
-    const BASE_URL = import.meta.env.VITE_URL_LOCAL
+    const BASE_URL = import.meta.env.VITE_URL_RENDER
     const [formVisible, setFormVisible] = useState(false)
     const [editando, setEditando] = useState(null)
     const { consultaApi, data, loading, error } = useFetch()

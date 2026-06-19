@@ -6,7 +6,7 @@ import caballeroVictorioso from '../../assets/Cabellero_victorioso.jpg'
 import './UserPelea.scss'
 
 export const UserPelea = () => {
-    const BASE_URL = import.meta.env.VITE_URL_LOCAL
+    const BASE_URL = import.meta.env.VITE_URL_RENDER
     const [resultado, setResultado] = useState(null)
     const [personaje, setPersonaje] = useState(null)
     const [enemigo, setEnemigo] = useState(null)

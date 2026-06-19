@@ -5,7 +5,7 @@ import './UserUsuario.scss'
 import { Feedback } from '../Feedback'
 
 export const UserUsuario = () => {
-    const BASE_URL = import.meta.env.VITE_URL_LOCAL
+    const BASE_URL = import.meta.env.VITE_URL_RENDER
     const [usuario, setUsuario] = useState(null)
     const { values, errors, handleChange, validate, reset } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
     const { data, loading, error, consultaApi } = useFetch()

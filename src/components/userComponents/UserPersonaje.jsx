@@ -6,7 +6,7 @@ import { Feedback } from '../Feedback'
 import './UserPersonaje.scss'
 
 export const UserPersonaje = () => {
-    const BASE_URL = import.meta.env.VITE_URL_LOCAL
+    const BASE_URL = import.meta.env.VITE_URL_RENDER
 
     const [personaje, setPersonaje] = useState(null)
     const { data, loading, error, consultaApi } = useFetch()
