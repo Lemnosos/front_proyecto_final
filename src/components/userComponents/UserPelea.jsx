@@ -119,7 +119,7 @@ export const UserPelea = () => {
                 <div className='enemigo'>
                     <h4>Estadisticas del {enemigo?.nombre}</h4>
                     <div className='imgContainer'>
-                        <img src={enemigo.url} alt={enemigo.nombre}></img>
+                        <img src={enemigo?.url} alt={enemigo?.nombre}></img>
                     </div>
                     <div className='estadisticas'>
                         <ol>
