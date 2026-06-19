@@ -119,18 +119,7 @@ export const UserPelea = () => {
                 <div className='enemigo'>
                     <h4>Estadisticas del {enemigo?.nombre}</h4>
                     <div className='imgContainer'>
-                        {
-                            !resultado &&
-                            <img src={caballeroTranquilo} alt='Caballero del personaje'></img>
-                        }
-                        {
-                            resultado === 'victoria' &&
-                            <img src={caballeroDerrotado} alt='Caballero del personaje'></img>
-                        }
-                        {
-                            resultado === 'derrota' &&
-                            <img src={caballeroVictorioso} alt='Caballero del personaje'></img>
-                        }
+                        <img src={enemigo.url} alt={enemigo.nombre}></img>
                     </div>
                     <div className='estadisticas'>
                         <ol>
