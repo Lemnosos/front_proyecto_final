@@ -23,8 +23,8 @@ export const useFormularios = (initialValues = {}) => {
         return Object.keys(newErrors).length === 0
     }
 
-    const reset = () => {
-        setValues(initialValues)
+    const reset = (newValues) => {
+        setValues(newValues ?? initialValues)
         setErrors({})
     }
 

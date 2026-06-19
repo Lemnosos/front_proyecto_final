@@ -1,4 +1,4 @@
-import { Login, Register, AuthFeedback } from '../components/indexComponents'
+import { Login, Register, Feedback } from '../components/indexComponents'
 import './Register.scss'
 
 export const RegisterPage = () => {
@@ -6,7 +6,7 @@ export const RegisterPage = () => {
         <div className="registerLayout">
             <Login />
             <Register />
-            <AuthFeedback />
+            <Feedback />
         </div>
     )
 }

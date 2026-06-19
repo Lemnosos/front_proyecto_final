@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { useFormularios } from '../hooks/useFormularios'
-import { UserContext } from '../context/UserContext'
+import { useFormularios } from '../../hooks/useFormularios'
+import { UserContext } from '../../context/UserContext'
 import './Register.scss'
 
 export const Register = () => {
@@ -14,7 +14,7 @@ export const Register = () => {
             email: { required: true, message: 'El email es obligatorio' },
             password: { required: true, message: 'La contraseña es obligatoria' }
         })) return
-        register(values)
+        register({ ...values, rol: 'user' })
     }
 
     return (

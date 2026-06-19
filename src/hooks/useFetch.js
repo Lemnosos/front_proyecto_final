@@ -20,9 +20,9 @@ export const useFetch = () => {
                 setData(json)
                 setError(null)
             }
-            return json
         } catch (err) {
             setError(err)
+            setData(null)
         } finally {
             setLoading(false)
         }

@@ -1,14 +1,16 @@
 .activo {
-  background-color: green;
   color: red;
 }
 
 .normal {
-  background-color: white;
-  color: black;
+  color: white;
 }
 
-.flexContainer {
+ul.nav {
+  list-style: none;
+}
+
+.flexContainer-navBar {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

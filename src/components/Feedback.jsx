@@ -1,9 +1,12 @@
 import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'
-import './AuthFeedback.scss'
+import './Feedback.scss'
 
-export const AuthFeedback = () => {
-    const { data, loading, error } = useContext(UserContext)
+export const Feedback = ({ loading: propLoading, error: propError, data: propData }) => {
+    const context = useContext(UserContext)
+    const loading = propLoading !== undefined ? propLoading : context?.loading
+    const error = propError !== undefined ? propError : context?.error
+    const data = propData !== undefined ? propData : context?.data
 
     return (
         <div className="auth-feedback">
@@ -17,9 +20,9 @@ export const AuthFeedback = () => {
                     {error?.error || 'Error desconocido'}
                 </div>
             )}
-            {data && !error && !loading && (
+            {data && !error && !loading && data?.data?.msg && (
                 <div className="feedback success-msg">
-                    {data?.data?.msg || 'Operación exitosa'}
+                    {data.data.msg}
                 </div>
             )}
         </div>

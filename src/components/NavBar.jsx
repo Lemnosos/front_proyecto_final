@@ -8,7 +8,7 @@ export const NavBar = () => {
 
     return (
         <nav>
-            <ul className='nav flexContainer'>
+            <ul className='nav flexContainer-navBar'>
                 {!isLogued &&
                     <li>
                         <NavLink
@@ -18,13 +18,32 @@ export const NavBar = () => {
                         </NavLink>
                     </li>}
                 {isLogued && usuario?.role === 'user' &&
-                    <li>
-                        <NavLink
-                            to='/user'
-                            className={({ isActive }) => isActive ? 'activo' : 'normal'}>
-                            Info Usuario
-                        </NavLink>
-                    </li>}
+                    <>
+                        <li>
+                            <NavLink to='/user/personaje'
+                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Personaje
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/user/pelea'
+                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Combatir
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/user/usuario'
+                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Revisar cuenta
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/user/historial'
+                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Historial de combates
+                            </NavLink>
+                        </li>
+                    </>}
                 {isLogued && usuario?.role === 'admin' && (
                     <>
                         <li>

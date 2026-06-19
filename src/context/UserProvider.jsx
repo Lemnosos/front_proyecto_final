@@ -7,27 +7,10 @@ export const UserProvider = ({ children }) => {
     const navigate = useNavigate()
     const BASE_URL = import.meta.env.VITE_URL_LOCAL
 
-    const [usuario, setUsuario] = useState({})
-    const [isLogued, setIsLogued] = useState(false)
     const { consultaApi, data, loading, error, clearFetch } = useFetch()
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch(`${BASE_URL}/public/renew`, {
-                    credentials: 'include'
-                })
-                const json = await res.json()
-                if (!json.ok) return
-                const { id, role } = json.data
-                setUsuario({ id, role })
-                setIsLogued(true)
-                navigate(role === 'admin' ? '/admin' : '/user')
-            } catch {
-                /* sin sesión activa */
-            }
-        })()
-    }, [])
+    const [usuario, setUsuario] = useState(null)
+    const [isLogued, setIsLogued] = useState(false)
 
     const logIn = async (user) => {
         const options = {
@@ -35,12 +18,7 @@ export const UserProvider = ({ children }) => {
             headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             body: JSON.stringify(user)
         }
-        const res = await consultaApi(`${BASE_URL}/public`, options)
-        if (!res?.ok) return
-        const { id, role } = res.data
-        setUsuario({ id, role })
-        setIsLogued(true)
-        navigate(role === 'admin' ? '/admin' : '/user')
+        await consultaApi(`${BASE_URL}/public`, options)
     }
 
     const logOut = async () => {
@@ -57,17 +35,28 @@ export const UserProvider = ({ children }) => {
             headers: { 'Content-Type': 'application/json; charset=UTF-8' },
             body: JSON.stringify(user)
         }
-        const res = await consultaApi(`${BASE_URL}/public/new`, options)
-        if (!res?.ok) return
-        const { id, role } = res.data
+        await consultaApi(`${BASE_URL}/public/new`, options)
+    }
+
+    const renovarToken = async () => {
+        await consultaApi(`${BASE_URL}/public/renew`, { method: 'GET' })
+    }
+
+    useEffect(() => {
+        renovarToken()
+    }, [])
+
+    useEffect(() => {
+        if (!data?.data?.id) return
+        const { id, role } = data.data
         setUsuario({ id, role })
         setIsLogued(true)
-        navigate('/user')
-    }
+        navigate(role === 'admin' ? '/admin/enemigos' : '/user/personaje')
+    }, [data])
 
     return (
         <UserContext.Provider
-            value={{ usuario, isLogued, logIn, logOut, register, data, loading, error }}>
+            value={{ usuario, isLogued, logIn, logOut, register, data, loading, error, clearFetch }}>
             {children}
         </UserContext.Provider>
     )

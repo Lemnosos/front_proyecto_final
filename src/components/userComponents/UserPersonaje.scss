@@ -1,0 +1,26 @@
+.flexContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1%;
+    text-align: center;
+
+    li {
+        list-style: none;
+    }
+
+    .margin-top {
+        margin-top: 1rem;
+    }
+
+    .imgContainer {
+        width: 33%;
+
+        .img {
+            width: 100%;
+        }
+    }
+
+    .statContainer {
+        width: 66%;
+    }
+}

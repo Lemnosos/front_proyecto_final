@@ -1,0 +1,32 @@
+.flexContainer-pelea {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .personaje {
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .panelCentral {
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .enemigo {
+        width: 33%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        img {
+            transform: scaleX(-1);
+        }
+    }
+
+}
