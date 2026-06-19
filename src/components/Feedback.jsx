@@ -2,6 +2,15 @@ import { useContext } from 'react'
 import { UserContext } from '../context/UserContext'
 import './Feedback.scss'
 
+/**
+ * Componente que muestra feedback al usuario (cargando, error, éxito).
+ * Acepta props opcionales `loading`, `error` y `data`; si no se pasan,
+ * intenta obtenerlos del UserContext como fallback.
+ * Esto permite usarlo tanto con useFetch local (AdminEnemigos) como
+ * con el contexto global (Login, Register).
+ *
+ * @param {{ loading?: boolean, error?: object|null, data?: object|null }} props
+ */
 export const Feedback = ({ loading: propLoading, error: propError, data: propData }) => {
     const context = useContext(UserContext)
     const loading = propLoading !== undefined ? propLoading : context?.loading
