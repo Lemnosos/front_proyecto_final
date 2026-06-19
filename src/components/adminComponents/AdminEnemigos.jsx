@@ -10,7 +10,7 @@ export const AdminEnemigos = () => {
     const [editando, setEditando] = useState(null)
     const { consultaApi, data, loading, error } = useFetch()
     const { values, errors, handleChange, validate, reset } = useFormularios({
-        nombre: '', vida: '', ataque: '', defensa: '', velocidad: '', tipo: 'normal'
+        nombre: '', vida: '', ataque: '', defensa: '', velocidad: '', tipo: 'normal', url: ''
     })
 
     useEffect(() => {
@@ -50,7 +50,8 @@ export const AdminEnemigos = () => {
             ataque: { required: true, message: 'El ataque es obligatorio' },
             defensa: { required: true, message: 'La defensa es obligatoria' },
             velocidad: { required: true, message: 'La velocidad es obligatoria' },
-            tipo: { required: true, message: 'El tipo es obligatorio' }
+            tipo: { required: true, message: 'El tipo es obligatorio' },
+            url: { required: true, message: 'El tipo es obligatorio' },
         })) return
 
         const payload = {
@@ -59,7 +60,8 @@ export const AdminEnemigos = () => {
             ataque: Number(values.ataque),
             defensa: Number(values.defensa),
             velocidad: Number(values.velocidad),
-            tipo: values.tipo
+            tipo: values.tipo,
+            url: values.url
         }
 
         if (editando) {
@@ -133,6 +135,11 @@ export const AdminEnemigos = () => {
                                 <option value="boss">Boss</option>
                             </select>
                             {errors.tipo && <span className="field-error">{errors.tipo}</span>}
+                        </div>
+                        <div>
+                            <label>URL de la imagen asociada</label>
+                            <input name="url" value={values.url} onChange={handleChange} />
+                            {errors.url && <span className="field-error">{errors.url}</span>}
                         </div>
                     </div>
                     <div className="form-actions">
