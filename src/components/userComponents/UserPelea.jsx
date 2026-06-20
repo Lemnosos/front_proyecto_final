@@ -65,7 +65,6 @@ export const UserPelea = () => {
         if (!personaje) return
         dispatch({ type: 'CURAR_JUGADOR' })
         setHealing(true);
-        setTimeout(() => setHealing(false), 1000);
     };
 
     //defender
@@ -73,7 +72,6 @@ export const UserPelea = () => {
         if (!personaje) return
         dispatch({ type: 'DEFENDER_JUGADOR', payload: { defensa: personaje.defensa } })
         setDefending(true);
-        setTimeout(() => setDefending(false), 900);
     };
 
     //atacar
@@ -116,6 +114,13 @@ export const UserPelea = () => {
         }, 1000)
         return () => clearTimeout(timer)
     }, [combate.activo, combate.turno, enemigo])
+
+    useEffect(() => {
+        if (combate.turno === 'jugador' || combate.resultado) {
+            setHealing(false)
+            setDefending(false)
+        }
+    }, [combate.turno, combate.resultado])
 
     useEffect(() => {
         if (!combate.resultado || !personaje || !enemigo) return
