@@ -7,7 +7,7 @@ import { UserPersonaje, UserPelea, UserUsuario, UserHistorial } from '../compone
 export const Rutas = () => {
     return (
         <Routes>
-            <Route path="/" element={<PublicPage />} />
+            <Route path="/" element={<Navigate to="/registro" />} />
             <Route path="/registro" element={<RegisterPage />} />
             <Route path="/user" element={
                 <ProtectedRoute role="user">

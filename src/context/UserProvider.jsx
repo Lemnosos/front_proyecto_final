@@ -21,6 +21,7 @@ export const UserProvider = ({ children }) => {
 
     const [usuario, setUsuario] = useState(null)
     const [isLogued, setIsLogued] = useState(false)
+    const [checking, setChecking] = useState(true)
 
     /**
      * Inicia sesión: envía credenciales al backend.
@@ -71,7 +72,11 @@ export const UserProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        renovarToken()
+        const init = async () => {
+            await renovarToken()
+            setChecking(false)
+        }
+        init()
     }, [])
 
     useEffect(() => {
@@ -84,7 +89,7 @@ export const UserProvider = ({ children }) => {
 
     return (
         <UserContext.Provider
-            value={{ usuario, isLogued, logIn, logOut, register, data, loading, error, clearFetch }}>
+            value={{ usuario, isLogued, checking, logIn, logOut, register, data, loading, error, clearFetch }}>
             {children}
         </UserContext.Provider>
     )

@@ -111,7 +111,7 @@ export const UserPelea = () => {
                     vidaMax: enemigo.vida
                 }
             })
-        }, 1000)
+        }, 3000)
         return () => clearTimeout(timer)
     }, [combate.activo, combate.turno, enemigo])
 
@@ -178,7 +178,7 @@ export const UserPelea = () => {
                                     className="sword"
                                     initial={{ x: 0, y: 0, opacity: 1, rotate: -45 }}
                                     animate={{ x: swordTarget.x, y: swordTarget.y, opacity: 0, rotate: 0 }}
-                                    transition={{ duration: 1 }}
+                                    transition={{ duration: 3 }}
                                 />
                             )}
                         </AnimatePresence>
