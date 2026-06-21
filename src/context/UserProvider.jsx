@@ -41,8 +41,7 @@ export const UserProvider = ({ children }) => {
     /**
      * Cierra sesión: elimina la cookie en el backend y limpia el estado local.
      */
-    const logOut = async () => {
-        await consultaApi(`${BASE_URL}/public/logout`, { method: 'POST' })
+    const logOut = () => {
         clearFetch()
         setUsuario(null)
         setIsLogued(false)
