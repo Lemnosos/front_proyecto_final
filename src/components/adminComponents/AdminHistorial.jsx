@@ -21,8 +21,6 @@ export const AdminHistorial = () => {
         <div className="admin-historial">
             <h3>Historial de peleas</h3>
 
-            <Feedback loading={loading} error={error} data={data} />
-
             {!loading && (
                 <table className="tabla-historial">
                     <thead>
@@ -50,6 +48,7 @@ export const AdminHistorial = () => {
                     </tbody>
                 </table>
             )}
+            <Feedback loading={loading} error={error} data={data} />
         </div>
     )
 }

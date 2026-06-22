@@ -5,19 +5,19 @@ import { Rutas } from './routes/Rutas'
 
 function App() {
 
-  useEffect(() => {
-    document.title = 'Tortazos y Mamporros'
-  }, [])
-
   return (
     <>
+      <header>
+        <p>Este es el header</p>
+        <title>Tortazos y mamporros</title>
+        <NavBar />
+      </header>
       <main>
         <h2>Bienvenido a Tortazos y mamporros</h2>
-        <NavBar />
         <Rutas />
       </main>
       <footer>
-        Proyecto realizado por mí para el proyecto final del bootcamp
+        <p> Proyecto realizado por mí para el proyecto final del bootcamp</p>
       </footer>
     </>
   )

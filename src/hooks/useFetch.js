@@ -26,6 +26,7 @@ export const useFetch = () => {
         setLoading(true)
         setError(null)
         setData(null)
+        console.log('data y error al pricipio', data, error)
         try {
             const res = await fetch(url, { ...opciones, credentials: 'include' })
             const json = await res.json()
@@ -40,6 +41,7 @@ export const useFetch = () => {
             setError(err)
             setData(null)
         } finally {
+            console.log('data y error al final', data, error)
             setLoading(false)
         }
     }

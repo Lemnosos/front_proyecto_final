@@ -23,6 +23,7 @@ export const UserProvider = ({ children }) => {
     const [isLogued, setIsLogued] = useState(false)
     const [checking, setChecking] = useState(true)
 
+
     /**
      * Inicia sesión: envía credenciales al backend.
      * La cookie httpOnly se recibe y almacena automáticamente.
@@ -67,15 +68,19 @@ export const UserProvider = ({ children }) => {
      * Se ejecuta automáticamente al montar el provider (equivalente a auto-login).
      */
     const renovarToken = async () => {
-        await consultaApi(`${BASE_URL}/public/renew`, { method: 'GET' })
+        try {
+            await consultaApi(`${BASE_URL}/public/renew`, { method: 'GET' })
+        } catch {
+        } finally {
+            setChecking(false)
+        }
     }
 
     useEffect(() => {
-        const init = async () => {
-            await renovarToken()
-            setChecking(false)
-        }
-        init()
+        console.log('renovando token')
+        renovarToken()
+            .then()
+            .catch((error) => { console.log('error en useEffect', error) })
     }, [])
 
     useEffect(() => {

@@ -150,8 +150,6 @@ export const AdminEnemigos = () => {
                 </form>
             )}
 
-            <Feedback loading={loading} error={error} data={data} />
-
             {!loading && (
                 <table className="tabla-enemigos">
                     <thead>
@@ -188,6 +186,7 @@ export const AdminEnemigos = () => {
                     </tbody>
                 </table>
             )}
+            <Feedback loading={loading} error={error} data={data} />
         </div>
     )
 }

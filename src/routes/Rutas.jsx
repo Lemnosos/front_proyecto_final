@@ -1,13 +1,13 @@
 import { Routes, Route, Navigate } from 'react-router'
-import { PublicPage, AdminPage, UserPage, RegisterPage } from '../pages/indexPages'
-import { AdminEnemigos, AdminUsuarios, AdminHistorial, AdminNuevoAdmin } from '../components/indexComponents'
 import { ProtectedRoute } from './ProtectedRoute'
-import { UserPersonaje, UserPelea, UserUsuario, UserHistorial } from '../components/indexComponents'
+
+import { AdminPage, UserPage, RegisterPage, PublicPage } from '../pages/index'
+import { AdminEnemigos, AdminHistorial, AdminNuevoAdmin, AdminUsuarios } from '../components/index'
+import { UserHistorial, UserPelea, UserPersonaje, UserUsuario } from '../components/index'
 
 export const Rutas = () => {
     return (
         <Routes>
-            <Route path="/" element={<Navigate to="/registro" />} />
             <Route path="/registro" element={<RegisterPage />} />
             <Route path="/user" element={
                 <ProtectedRoute role="user">
@@ -31,7 +31,7 @@ export const Rutas = () => {
                 <Route path="nuevoAdmin" element={<AdminNuevoAdmin />} />
             </Route>
 
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/registro" />} />
         </Routes>
     )
 }

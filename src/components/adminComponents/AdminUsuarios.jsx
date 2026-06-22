@@ -34,7 +34,7 @@ export const AdminUsuarios = () => {
                 <h3>Listado de los usuarios registrados</h3>
             </div>
 
-            <Feedback loading={loading} error={error} data={data} />
+
 
             {!loading && (
                 <table className="tabla-usuarios">
@@ -67,6 +67,7 @@ export const AdminUsuarios = () => {
                     </tbody>
                 </table>
             )}
+            <Feedback loading={loading} error={error} data={data} />
         </div>
     )
 }

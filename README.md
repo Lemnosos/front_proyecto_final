@@ -50,7 +50,7 @@ src/
 │   ├── userComponents/   # UserPersonaje, UserPelea, UserUsuario, UserHistorial
 │   ├── Feedback.jsx      # Feedback loading/error/éxito (props + context fallback)
 │   ├── NavBar.jsx        # Barra de navegación según rol
-│   └── indexComponents.js
+│   └── index.js
 ├── context/
 │   ├── UserContext.jsx    # createContext
 │   └── UserProvider.jsx   # Provider con lógica de auth (login, register, logout, renew)
@@ -70,17 +70,17 @@ src/
 
 ## Vistas y rutas
 
-| Ruta | Componente | Descripción |
-|---|---|---|
-| `/` | `PublicPage` | Página de inicio |
-| `/registro` | `RegisterPage` | Login + Registro |
-| `/user/personaje` | `UserPersonaje` | CRUD del personaje del usuario |
-| `/user/pelea` | `UserPelea` | Combate contra enemigos |
-| `/user/usuario` | `UserUsuario` | Datos de la cuenta del usuario |
-| `/user/historial` | `UserHistorial` | Historial de combates del usuario |
-| `/admin/enemigos` | `AdminEnemigos` | CRUD de enemigos |
-| `/admin/usuarios` | `AdminUsuarios` | Listado y eliminación de usuarios |
-| `/admin/historial` | `AdminHistorial` | Historial global de combates |
+| Ruta                | Componente        | Descripción                        |
+| ------------------- | ----------------- | ---------------------------------- |
+| `/`                 | `PublicPage`      | Página de inicio                   |
+| `/registro`         | `RegisterPage`    | Login + Registro                   |
+| `/user/personaje`   | `UserPersonaje`   | CRUD del personaje del usuario     |
+| `/user/pelea`       | `UserPelea`       | Combate contra enemigos            |
+| `/user/usuario`     | `UserUsuario`     | Datos de la cuenta del usuario     |
+| `/user/historial`   | `UserHistorial`   | Historial de combates del usuario  |
+| `/admin/enemigos`   | `AdminEnemigos`   | CRUD de enemigos                   |
+| `/admin/usuarios`   | `AdminUsuarios`   | Listado y eliminación de usuarios  |
+| `/admin/historial`  | `AdminHistorial`  | Historial global de combates       |
 | `/admin/nuevoAdmin` | `AdminNuevoAdmin` | Creación de nuevos administradores |
 
 ---

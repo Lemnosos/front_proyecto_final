@@ -21,8 +21,6 @@ export const UserHistorial = () => {
         <div className="user-historial">
             <h3>Historial de peleas de tu pesonaje</h3>
 
-            <Feedback loading={loading} error={error} data={data} />
-
             {!loading && (
                 <table className="tabla-historial">
                     <thead>
@@ -48,6 +46,8 @@ export const UserHistorial = () => {
                     </tbody>
                 </table>
             )}
+            <Feedback loading={loading} error={error} data={data} />
+
         </div>
     )
 }
