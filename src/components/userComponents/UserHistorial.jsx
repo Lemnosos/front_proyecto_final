@@ -17,6 +17,7 @@ export const UserHistorial = () => {
         cargarHistorial()
     }, [])
 
+
     return (
         <div className="user-historial">
             <h3>Historial de peleas de tu pesonaje</h3>

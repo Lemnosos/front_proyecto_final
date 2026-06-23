@@ -40,7 +40,6 @@ export const UserPersonaje = () => {
             body: JSON.stringify({ id: personaje?.id })
         })
     }
-
     const handleKeyDown = (e) => {
         // Permitimos solo teclas de control
         const allowedKeys = [

@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <header>
-        <p>Este es el header</p>
+        <p>Bienvenido a la pagina de registro de Tortazos y mamporros</p>
         <title>Tortazos y mamporros</title>
         <NavBar />
       </header>

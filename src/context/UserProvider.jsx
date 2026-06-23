@@ -37,6 +37,7 @@ export const UserProvider = ({ children }) => {
             body: JSON.stringify(user)
         }
         await consultaApi(`${BASE_URL}/public`, options)
+        setChecking(false)
     }
 
     /**
@@ -61,6 +62,7 @@ export const UserProvider = ({ children }) => {
             body: JSON.stringify(user)
         }
         await consultaApi(`${BASE_URL}/public/new`, options)
+        setChecking(false)
     }
 
     /**
@@ -76,19 +78,21 @@ export const UserProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        console.log('renovando token')
-        renovarToken()
-            .then()
-            .catch((error) => { console.log('error en useEffect', error) })
-    }, [])
+    // useEffect(() => {
+    //     console.log('renovando token')
+    //     renovarToken()
+    //         .then()
+    //         .catch((error) => { console.log('error en useEffect', error) })
+    // }, [])
 
     useEffect(() => {
         if (!data?.data?.id) return
         const { id, role } = data.data
+        console.log('datos en uso: ', id, role)
         setUsuario({ id, role })
         setIsLogued(true)
         navigate(role === 'admin' ? '/admin/enemigos' : '/user/personaje')
+        setChecking(false)
     }, [data])
 
     return (
