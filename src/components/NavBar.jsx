@@ -8,19 +8,27 @@ export const NavBar = () => {
     const { usuario, isLogued, logOut } = useContext(UserContext)
     const { data } = useFetch()
 
-
-
     return (
         <nav>
             <ul className='nav flexContainer-navBar'>
                 {!isLogued &&
-                    <li>
-                        <NavLink
-                            to='/registro'
-                            className={({ isActive }) => isActive ? 'activo' : 'normal'}>
-                            Registro
-                        </NavLink>
-                    </li>}
+                    <>
+                        <li>
+                            <NavLink
+                                to='/'
+                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Inicio
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to='/registro'
+                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Registro
+                            </NavLink>
+                        </li>
+                    </>
+                }
                 {isLogued && usuario?.role === 'user' &&
                     <>
                         <li>

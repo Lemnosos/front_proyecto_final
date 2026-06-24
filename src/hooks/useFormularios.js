@@ -44,5 +44,11 @@ export const useFormularios = (initialValues = {}) => {
         setErrors({})
     }
 
-    return { values, errors, handleChange, serializarFormulario, reset }
+    return {
+        values,
+        errors,
+        handleChange,
+        serializarFormulario,
+        reset
+    }
 }

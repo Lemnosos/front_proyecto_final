@@ -9,7 +9,6 @@ function App() {
   return (
     <>
       <header>
-        <p>Bienvenido a la pagina del juego de Tortazos y mamporros</p>
         <NavBar />
       </header>
       <main>
