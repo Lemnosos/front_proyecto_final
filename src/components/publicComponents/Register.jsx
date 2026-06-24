@@ -5,12 +5,13 @@ import './Register.scss'
 import { Feedback } from '../Feedback'
 
 export const Register = () => {
-    const { values, errors, handleChange, validate } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
+    const { values, errors, handleChange, serializarFormulario } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
     const { register } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        register({ ...values, rol: 'user' })
+        const formulario = serializarFormulario(e.target)
+        register({ ...formulario, rol: 'user' })
     }
 
     return (

@@ -7,20 +7,15 @@ import { Feedback } from '../Feedback'
 export const UserUsuario = () => {
     const BASE_URL = import.meta.env.VITE_URL_RENDER
     const [usuario, setUsuario] = useState(null)
-    const { values, errors, handleChange, validate, reset } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
+    const { values, errors, handleChange, serializarFormulario, reset } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
     const { data, loading, error, consultaApi } = useFetch()
 
     const tieneUsuario = !!usuario
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!validate({
-            nombre: { required: false, message: 'El nombre es obligatorio' },
-            apodo: { required: false, message: 'El nombre es obligatorio' },
-            email: { required: false, message: 'El email es obligatorio' },
-            password: { required: false, message: 'La contraseña es obligatoria' }
-        })) return
-        console.log(values)
+        const formulario = serializarFormulario(e.target)
+        console.log(formulario)
     }
 
     const traerUsuario = () => {

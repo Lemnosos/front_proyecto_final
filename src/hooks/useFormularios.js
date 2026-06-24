@@ -6,7 +6,7 @@ import { useState } from 'react'
  * lógica repetitiva en cada componente.
  *
  * @param {object} initialValues - Valores iniciales del formulario
- * @returns {{ values: object, errors: object, handleChange: Function, validate: Function, reset: Function }}
+ * @returns {{ values: object, errors: object, handleChange: Function, serializarFormulario: Function, reset: Function }}
  */
 export const useFormularios = (initialValues = {}) => {
     const [values, setValues] = useState(initialValues)
@@ -26,23 +26,11 @@ export const useFormularios = (initialValues = {}) => {
         }
     }
 
-    /**
-     * Valida los campos según las reglas proporcionadas.
-     * Cada regla debe tener la forma `{ required: boolean, message: string }`.
-     *
-     * @param {object} rules - Objeto con reglas: `{ campo: { required, message } }`
-     * @returns {boolean} `true` si no hay errores, `false` en caso contrario
-     */
-    const validate = (rules = {}) => {
-        const newErrors = {}
-        for (const [field, rule] of Object.entries(rules)) {
-            if (rule.required && !values[field]?.trim()) {
-                newErrors[field] = rule.message || 'Campo obligatorio'
-            }
-        }
-        setErrors(newErrors)
-        return Object.keys(newErrors).length === 0
+    const serializarFormulario = (formularioDOM) => {
+        const formData = new FormData(formularioDOM)
+        return Object.fromEntries(formData.entries())
     }
+
 
     /**
      * Reinicia los valores del formulario.
@@ -56,5 +44,5 @@ export const useFormularios = (initialValues = {}) => {
         setErrors({})
     }
 
-    return { values, errors, handleChange, validate, reset }
+    return { values, errors, handleChange, serializarFormulario, reset }
 }

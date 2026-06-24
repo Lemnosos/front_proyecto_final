@@ -48,6 +48,7 @@ export const UserProvider = ({ children }) => {
         setUsuario(null)
         setIsLogued(false)
         navigate('/registro')
+        borrarToken()
     }
 
     /**
@@ -69,9 +70,9 @@ export const UserProvider = ({ children }) => {
      * Renueva la sesión usando la cookie existente.
      * Se ejecuta automáticamente al montar el provider (equivalente a auto-login).
      */
-    const renovarToken = async () => {
+    const borrarToken = async () => {
         try {
-            await consultaApi(`${BASE_URL}/public/renew`, { method: 'GET' })
+            await consultaApi(`${BASE_URL}/public/delete`, { method: 'GET' })
         } catch {
         } finally {
             setChecking(false)
@@ -88,7 +89,6 @@ export const UserProvider = ({ children }) => {
     useEffect(() => {
         if (!data?.data?.id) return
         const { id, role } = data.data
-        console.log('datos en uso: ', id, role)
         setUsuario({ id, role })
         setIsLogued(true)
         navigate(role === 'admin' ? '/admin/enemigos' : '/user/personaje')

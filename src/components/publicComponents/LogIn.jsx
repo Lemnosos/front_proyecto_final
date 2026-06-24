@@ -4,16 +4,13 @@ import { UserContext } from '../../context/UserContext'
 import './Login.scss'
 
 export const Login = () => {
-    const { values, errors, handleChange, validate } = useFormularios({ email: '', password: '' })
+    const { values, errors, handleChange, serializarFormulario } = useFormularios({ email: '', password: '' })
     const { logIn } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!validate({
-            email: { required: true, message: 'El email es obligatorio' },
-            password: { required: true, message: 'La contraseña es obligatoria' }
-        })) return
-        logIn(values)
+        const formulario = serializarFormulario(e.target)
+        logIn(formulario)
     }
 
     return (

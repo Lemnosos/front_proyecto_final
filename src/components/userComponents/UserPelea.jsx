@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef, useReducer } from 'react'
 import { motion, AnimatePresence } from "framer-motion";
 import { useFetch } from '../../hooks/useFetch'
-import caballeroTranquilo from '../../assets/Caballero_tranquilo.jpg'
-import caballeroDerrotado from '../../assets/Caballero_derrotado.jpg'
-import caballeroVictorioso from '../../assets/Cabellero_victorioso.jpg'
 import espada from '../../assets/espada.jpg'
 import { combatReducer, estadoInicial } from '../../hooks/combatReducer'
 import './UserPelea.scss'
@@ -49,7 +46,7 @@ export const UserPelea = () => {
                 id_personaje: personaje.id,
                 id_enemigo: enemigo.id,
                 resultado: 'derrota',
-                turnos: combate.turnos || 0
+                turnos: 0
             })
         })
         dispatch({ type: 'ABANDONAR' })
@@ -186,15 +183,18 @@ export const UserPelea = () => {
                         {/* IMAGEN PERSONAJE */}
                         {
                             !combate.resultado &&
-                            <img src={caballeroTranquilo} alt='Caballero del personaje' ref={charRef} />
+                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/v1782226455/imagenes/caballero_tranquilo.jpg"
+                                alt='Caballero del personaje' ref={charRef} />
                         }
                         {
                             combate.resultado === 'victoria' &&
-                            <img src={caballeroVictorioso} alt='Caballero del personaje' ref={charRef} />
+                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/v1782226477/imagenes/caballero_victorioso.jpg"
+                                alt='Caballero del personaje' ref={charRef} />
                         }
                         {
                             combate.resultado === 'derrota' &&
-                            <img src={caballeroDerrotado} alt='Caballero del personaje' ref={charRef} />
+                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/v1782226499/imagenes/caballer_derrotado.jpg"
+                                alt='Caballero del personaje' ref={charRef} />
                         }
 
                     </div>

@@ -2,14 +2,14 @@ import { useEffect } from 'react'
 import './App.scss'
 import { NavBar } from './components/NavBar'
 import { Rutas } from './routes/Rutas'
+import { UserContext } from './context/UserContext.jsx'
 
 function App() {
 
   return (
     <>
       <header>
-        <p>Bienvenido a la pagina de registro de Tortazos y mamporros</p>
-        <title>Tortazos y mamporros</title>
+        <p>Bienvenido a la pagina del juego de Tortazos y mamporros</p>
         <NavBar />
       </header>
       <main>

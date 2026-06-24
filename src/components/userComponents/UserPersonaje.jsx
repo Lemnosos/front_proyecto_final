@@ -10,7 +10,7 @@ export const UserPersonaje = () => {
 
     const [personaje, setPersonaje] = useState(null)
     const { data, loading, error, consultaApi } = useFetch()
-    const { values, errors, handleChange, validate, reset } = useFormularios(
+    const { values, handleChange, reset } = useFormularios(
         { id: -1, nombre: '', vida: '100', ataque: '100', defensa: '100', velocidad: '100' })
 
     const tienePersonaje = !!personaje
@@ -26,7 +26,6 @@ export const UserPersonaje = () => {
         })
     }
     const handleEditar = (e) => {
-        console.log("Valores q se envian: ", values)
         consultaApi(`${BASE_URL}/users/Personaje`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },

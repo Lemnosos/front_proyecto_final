@@ -8,17 +8,13 @@ import { useNavigate } from 'react-router'
 
 export const AdminNuevoAdmin = () => {
     const navigate = useNavigate()
-    const { values, errors, handleChange, validate } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
+    const { values, errors, handleChange, serializarFormulario } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
     const { register, loading, data, error } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!validate({
-            nombre: { required: true, message: 'El nombre es obligatorio' },
-            email: { required: true, message: 'El email es obligatorio' },
-            password: { required: true, message: 'La contraseña es obligatoria' }
-        })) return
-        const nuevoUsuario = { ...values, rol: 'admin' }
+        const formulario = serializarFormulario(e.target)
+        const nuevoUsuario = { ...formulario, rol: 'admin' }
         register(nuevoUsuario)
         navigate('admin/usuarios')
 

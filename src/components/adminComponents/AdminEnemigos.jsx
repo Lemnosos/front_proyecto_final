@@ -8,14 +8,16 @@ export const AdminEnemigos = () => {
     const BASE_URL = import.meta.env.VITE_URL_RENDER
     const [formVisible, setFormVisible] = useState(false)
     const [editando, setEditando] = useState(null)
+
+    const [image, setImage] = useState(null);
+    const [name, setName] = useState("");
+
     const { consultaApi, data, loading, error } = useFetch()
-    const { values, errors, handleChange, validate, reset } = useFormularios({
+    const { values, errors, handleChange, serializarFormulario, reset } = useFormularios({
         nombre: '', vida: '', ataque: '', defensa: '', velocidad: '', tipo: 'normal', url: ''
     })
 
-    useEffect(() => {
-        cargarEnemigos()
-    }, [])
+
 
     const cargarEnemigos = () => {
         consultaApi(`${BASE_URL}/admin/enemigos`, { method: 'GET' })
@@ -45,37 +47,26 @@ export const AdminEnemigos = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!validate({
-            nombre: { required: true, message: 'El nombre es obligatorio' },
-            vida: { required: true, message: 'La vida es obligatoria' },
-            ataque: { required: true, message: 'El ataque es obligatorio' },
-            defensa: { required: true, message: 'La defensa es obligatoria' },
-            velocidad: { required: true, message: 'La velocidad es obligatoria' },
-            tipo: { required: true, message: 'El tipo es obligatorio' },
-            url: { required: true, message: 'La url es obligatorio' },
-        })) return
 
-        const payload = {
-            nombre: values.nombre,
-            vida: Number(values.vida),
-            ataque: Number(values.ataque),
-            defensa: Number(values.defensa),
-            velocidad: Number(values.velocidad),
-            tipo: values.tipo,
-            url: values.url
-        }
+        const formData = new FormData()
+        formData.append('nombre', values.nombre)
+        formData.append('vida', values.vida)
+        formData.append('ataque', values.ataque)
+        formData.append('defensa', values.defensa)
+        formData.append('velocidad', values.velocidad)
+        formData.append('tipo', values.tipo)
+        if (image) formData.append('image', image)
 
         if (editando) {
             await consultaApi(`${BASE_URL}/admin/enemigos`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: editando.id, ...payload })
+                body: JSON.stringify({ ...values, id: editando.id })
             })
         } else {
             await consultaApi(`${BASE_URL}/admin/enemigos`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
+                body: formData
             })
         }
 
@@ -93,6 +84,10 @@ export const AdminEnemigos = () => {
         cargarEnemigos()
     }
 
+    useEffect(() => {
+        cargarEnemigos()
+    }, [])
+
     return (
         <div className="admin-enemigos">
             <div className="header">
@@ -107,27 +102,22 @@ export const AdminEnemigos = () => {
                         <div>
                             <label>Nombre</label>
                             <input name="nombre" value={values.nombre} onChange={handleChange} />
-                            {errors.nombre && <span className="field-error">{errors.nombre}</span>}
                         </div>
                         <div>
                             <label>Vida</label>
                             <input name="vida" type="number" value={values.vida} onChange={handleChange} />
-                            {errors.vida && <span className="field-error">{errors.vida}</span>}
                         </div>
                         <div>
                             <label>Ataque</label>
                             <input name="ataque" type="number" value={values.ataque} onChange={handleChange} />
-                            {errors.ataque && <span className="field-error">{errors.ataque}</span>}
                         </div>
                         <div>
                             <label>Defensa</label>
                             <input name="defensa" type="number" value={values.defensa} onChange={handleChange} />
-                            {errors.defensa && <span className="field-error">{errors.defensa}</span>}
                         </div>
                         <div>
                             <label>Velocidad</label>
                             <input name="velocidad" type="number" value={values.velocidad} onChange={handleChange} />
-                            {errors.velocidad && <span className="field-error">{errors.velocidad}</span>}
                         </div>
                         <div>
                             <label>Tipo</label>
@@ -135,12 +125,14 @@ export const AdminEnemigos = () => {
                                 <option value="normal">Normal</option>
                                 <option value="boss">Boss</option>
                             </select>
-                            {errors.tipo && <span className="field-error">{errors.tipo}</span>}
                         </div>
                         <div>
-                            <label>URL de la imagen asociada</label>
-                            <input name="url" value={values.url} onChange={handleChange} />
-                            {errors.url && <span className="field-error">{errors.url}</span>}
+                            <label>Imagen asociada al enemigo</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => setImage(e.target.files[0])}
+                            />
                         </div>
                     </div>
                     <div className="form-actions">
