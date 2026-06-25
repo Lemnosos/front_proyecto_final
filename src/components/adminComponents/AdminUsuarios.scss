@@ -1,4 +1,13 @@
 .admin-usuarios {
+    text-align: center;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
     @media (max-width: 768px) {
         .header {
             flex-direction: column;
@@ -7,17 +16,4 @@
             text-align: center;
         }
     }
-
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 1rem;
-
-        h3 {
-            margin: 0;
-        }
-    }
-
-
 }
