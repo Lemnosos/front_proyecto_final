@@ -18,7 +18,7 @@ export const UserUsuario = () => {
         await consultaApi(`${BASE_URL}/users/usuarios/${usuario.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ apodo: values.apodo })
+            body: JSON.stringify({ nombre: values.nombre, apodo: values.apodo })
         })
         traerUsuario()
     }
@@ -61,7 +61,7 @@ export const UserUsuario = () => {
                         <label htmlFor='nombre'>Introduce el nombre</label>
                     </li>
                     <li>
-                        <input id="nombre" name="nombre" value={values.nombre} readOnly />
+                        <input id="nombre" name="nombre" value={values.nombre} onChange={handleChange} />
                     </li>
 
                     <li>
