@@ -1,38 +1,52 @@
+import { Suspense, lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 import { ProtectedRoute } from './ProtectedRoute'
 
-import { AdminPage, UserPage, RegisterPage, PublicPage } from '../pages/index'
-import { AdminEnemigos, AdminHistorial, AdminNuevoAdmin, AdminUsuarios } from '../components/index'
-import { UserHistorial, UserPelea, UserPersonaje, UserUsuario } from '../components/index'
+const AdminPage = lazy(() => import('../pages/Admin.pages').then(m => ({ default: m.AdminPage })))
+const UserPage = lazy(() => import('../pages/User.pages').then(m => ({ default: m.UserPage })))
+const RegisterPage = lazy(() => import('../pages/Register.pages').then(m => ({ default: m.RegisterPage })))
+const PublicPage = lazy(() => import('../pages/Public.pages').then(m => ({ default: m.PublicPage })))
+
+const AdminEnemigos = lazy(() => import('../components/adminComponents/AdminEnemigos').then(m => ({ default: m.AdminEnemigos })))
+const AdminHistorial = lazy(() => import('../components/adminComponents/AdminHistorial').then(m => ({ default: m.AdminHistorial })))
+const AdminNuevoAdmin = lazy(() => import('../components/adminComponents/AdminNuevoAdmin').then(m => ({ default: m.AdminNuevoAdmin })))
+const AdminUsuarios = lazy(() => import('../components/adminComponents/AdminUsuarios').then(m => ({ default: m.AdminUsuarios })))
+
+const UserHistorial = lazy(() => import('../components/userComponents/UserHistorial').then(m => ({ default: m.UserHistorial })))
+const UserPelea = lazy(() => import('../components/userComponents/UserPelea').then(m => ({ default: m.UserPelea })))
+const UserPersonaje = lazy(() => import('../components/userComponents/UserPersonaje').then(m => ({ default: m.UserPersonaje })))
+const UserUsuario = lazy(() => import('../components/userComponents/UserUsuario').then(m => ({ default: m.UserUsuario })))
 
 export const Rutas = () => {
     return (
-        <Routes>
-            <Route path="/" element={<PublicPage />} />
-            <Route path="/registro" element={<RegisterPage />} />
-            <Route path="/user" element={
-                <ProtectedRoute role="user">
-                    <UserPage />
-                </ProtectedRoute>} >
-                <Route index element={<Navigate to="personaje" />} />
-                <Route path="personaje" element={<UserPersonaje />} />
-                <Route path="pelea" element={<UserPelea />} />
-                <Route path="usuario" element={<UserUsuario />} />
-                <Route path="historial" element={<UserHistorial />} />
-            </Route>
+        <Suspense fallback={<p>Cargando...</p>}>
+            <Routes>
+                <Route path="/" element={<PublicPage />} />
+                <Route path="/registro" element={<RegisterPage />} />
+                <Route path="/user" element={
+                    <ProtectedRoute role="user">
+                        <UserPage />
+                    </ProtectedRoute>} >
+                    <Route index element={<Navigate to="personaje" />} />
+                    <Route path="personaje" element={<UserPersonaje />} />
+                    <Route path="pelea" element={<UserPelea />} />
+                    <Route path="usuario" element={<UserUsuario />} />
+                    <Route path="historial" element={<UserHistorial />} />
+                </Route>
 
-            <Route path="/admin" element={
-                <ProtectedRoute role="admin">
-                    <AdminPage />
-                </ProtectedRoute>}>
-                <Route index element={<Navigate to="enemigos" />} />
-                <Route path="enemigos" element={<AdminEnemigos />} />
-                <Route path="usuarios" element={<AdminUsuarios />} />
-                <Route path="historial" element={<AdminHistorial />} />
-                <Route path="nuevoAdmin" element={<AdminNuevoAdmin />} />
-            </Route>
+                <Route path="/admin" element={
+                    <ProtectedRoute role="admin">
+                        <AdminPage />
+                    </ProtectedRoute>}>
+                    <Route index element={<Navigate to="enemigos" />} />
+                    <Route path="enemigos" element={<AdminEnemigos />} />
+                    <Route path="usuarios" element={<AdminUsuarios />} />
+                    <Route path="historial" element={<AdminHistorial />} />
+                    <Route path="nuevoAdmin" element={<AdminNuevoAdmin />} />
+                </Route>
 
-            <Route path="/*" element={<Navigate to="/" />} />
-        </Routes>
+                <Route path="/*" element={<Navigate to="/" />} />
+            </Routes>
+        </Suspense>
     )
 }

@@ -24,3 +24,14 @@
         width: 66%;
     }
 }
+
+@media (max-width: 768px) {
+    .flexContainer {
+        flex-direction: column;
+
+        .imgContainer,
+        .statContainer {
+            width: 100%;
+        }
+    }
+}

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useReducer } from 'react'
 import { motion, AnimatePresence } from "framer-motion";
 import { useFetch } from '../../hooks/useFetch'
 import espada from '../../assets/espada.jpg'
-import { combatReducer, estadoInicial } from '../../hooks/combatReducer'
+import { useCombatReducer, combateInicial } from '../../hooks/useCombatReducer'
 import './UserPelea.scss'
 
 export const UserPelea = () => {
@@ -10,9 +10,8 @@ export const UserPelea = () => {
 
     const [personaje, setPersonaje] = useState(null)
     const [enemigo, setEnemigo] = useState(null)
-    const [combate, dispatch] = useReducer(combatReducer, estadoInicial)
+    const [combate, dispatch] = useReducer(useCombatReducer, combateInicial)
 
-    // 🔥 estados de animación
     const [healing, setHealing] = useState(false);
     const [defending, setDefending] = useState(false);
     const [attacking, setAttacking] = useState(false);
@@ -81,12 +80,14 @@ export const UserPelea = () => {
         setSwordTarget({ x: dx, y: dy })
         dispatch({ type: 'ATACAR', payload: { ataque: personaje.ataque } })
         setAttacking(true);
-        setTimeout(() => setAttacking(false), 1000);
+        setTimeout(() => setAttacking(false), 3000);
     };
 
     useEffect(() => {
-        consultaApi(`${BASE_URL}/users/Personaje`, { method: 'GET' })
-        consultaApi(`${BASE_URL}/users/enemigo`, { method: 'GET' })
+        Promise.all([
+            consultaApi(`${BASE_URL}/users/personaje`, { method: 'GET' }),
+            consultaApi(`${BASE_URL}/users/enemigo`, { method: 'GET' })
+        ])
     }, [])
 
     useEffect(() => {
@@ -135,7 +136,7 @@ export const UserPelea = () => {
 
     return (
         <>
-            <h4>Espacio de pelea contra enemigos</h4>
+            <h1>Espacio de pelea contra enemigos</h1>
 
             <div className='flexContainer-pelea'>
 
@@ -249,7 +250,6 @@ export const UserPelea = () => {
                         </ol>
                     </div>
                 </div>
-
             </div>
         </>
     )

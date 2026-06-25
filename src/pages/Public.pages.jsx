@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import './Public.scss'
+import './Public.pages.scss'
 
 export const PublicPage = () => {
     return (

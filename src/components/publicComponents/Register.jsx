@@ -2,7 +2,6 @@ import { useContext } from 'react'
 import { useFormularios } from '../../hooks/useFormularios'
 import { UserContext } from '../../context/UserContext'
 import './Register.scss'
-import { Feedback } from '../Feedback'
 
 export const Register = () => {
     const { values, errors, handleChange, serializarFormulario } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
@@ -52,7 +51,6 @@ export const Register = () => {
                 </ol>
             </form >
 
-            <Feedback />
         </>
     )
 }

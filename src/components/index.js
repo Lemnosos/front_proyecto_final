@@ -13,3 +13,5 @@ export * from './userComponents/UserUsuario'
 
 export * from './Feedback'
 export * from './NavBar'
+export * from './FormularioStats'
+export * from './TablaGenerica'

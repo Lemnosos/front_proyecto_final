@@ -1,4 +1,13 @@
 .admin-usuarios {
+    @media (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            text-align: center;
+        }
+    }
+
     .header {
         display: flex;
         justify-content: space-between;
@@ -10,57 +19,5 @@
         }
     }
 
-    .tabla-usuarios {
-        width: auto;
-        margin: 0 auto;
-        border-collapse: collapse;
 
-        th,
-        td {
-            padding: 0.5rem 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            font-size: 0.85rem;
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        td {
-            color: var(--text-h);
-        }
-
-        .sin-datos {
-            text-align: center;
-            color: var(--text);
-            padding: 2rem;
-        }
-
-        .acciones {
-            display: flex;
-            gap: 0.4rem;
-
-            .btn-eliminar {
-                padding: 0.3rem 0.6rem;
-                background: #e53935;
-                color: #fff;
-                border: none;
-                border-radius: 3px;
-                cursor: pointer;
-                font-size: 0.8rem;
-
-                &:hover {
-                    background: #c62828;
-                }
-            }
-        }
-    }
-
-    .feedback.loading {
-        padding: 2rem;
-        text-align: center;
-        color: var(--text);
-    }
 }

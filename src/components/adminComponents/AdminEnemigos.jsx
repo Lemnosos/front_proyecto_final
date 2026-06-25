@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useFetch } from '../../hooks/useFetch'
-import { useFormularios } from '../../hooks/useFormularios'
-import { Feedback } from '../Feedback'
+import { Feedback, FormularioStats, TablaGenerica } from '../index'
 import './AdminEnemigos.scss'
 
 export const AdminEnemigos = () => {
@@ -9,15 +8,7 @@ export const AdminEnemigos = () => {
     const [formVisible, setFormVisible] = useState(false)
     const [editando, setEditando] = useState(null)
 
-    const [image, setImage] = useState(null);
-    const [name, setName] = useState("");
-
     const { consultaApi, data, loading, error } = useFetch()
-    const { values, errors, handleChange, serializarFormulario, reset } = useFormularios({
-        nombre: '', vida: '', ataque: '', defensa: '', velocidad: '', tipo: 'normal', url: ''
-    })
-
-
 
     const cargarEnemigos = () => {
         consultaApi(`${BASE_URL}/admin/enemigos`, { method: 'GET' })
@@ -27,27 +18,15 @@ export const AdminEnemigos = () => {
 
     const abrirFormCrear = () => {
         setEditando(null)
-        reset()
         setFormVisible(true)
     }
 
     const abrirFormEditar = (enemigo) => {
         setEditando(enemigo)
-        reset({
-            nombre: enemigo.nombre,
-            vida: String(enemigo.vida),
-            ataque: String(enemigo.ataque),
-            defensa: String(enemigo.defensa),
-            velocidad: String(enemigo.velocidad),
-            tipo: enemigo.tipo,
-            url: enemigo.url
-        })
         setFormVisible(true)
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
+    const handleSubmit = async (values, image) => {
         const formData = new FormData()
         formData.append('nombre', values.nombre)
         formData.append('vida', values.vida)
@@ -91,94 +70,51 @@ export const AdminEnemigos = () => {
     return (
         <div className="admin-enemigos">
             <div className="header">
-                <h3>Enemigos</h3>
+                <h1>Enemigos</h1>
                 <button onClick={abrirFormCrear} className="btn-crear">Crear enemigo</button>
             </div>
 
             {formVisible && (
-                <form onSubmit={handleSubmit} className="form-enemigo">
-                    <h4>{editando ? 'Editar enemigo' : 'Nuevo enemigo'}</h4>
-                    <div className="form-grid">
-                        <div>
-                            <label>Nombre</label>
-                            <input name="nombre" value={values.nombre} onChange={handleChange} />
-                        </div>
-                        <div>
-                            <label>Vida</label>
-                            <input name="vida" type="number" value={values.vida} onChange={handleChange} />
-                        </div>
-                        <div>
-                            <label>Ataque</label>
-                            <input name="ataque" type="number" value={values.ataque} onChange={handleChange} />
-                        </div>
-                        <div>
-                            <label>Defensa</label>
-                            <input name="defensa" type="number" value={values.defensa} onChange={handleChange} />
-                        </div>
-                        <div>
-                            <label>Velocidad</label>
-                            <input name="velocidad" type="number" value={values.velocidad} onChange={handleChange} />
-                        </div>
-                        <div>
-                            <label>Tipo</label>
-                            <select name="tipo" value={values.tipo} onChange={handleChange}>
-                                <option value="normal">Normal</option>
-                                <option value="boss">Boss</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label>Imagen asociada al enemigo</label>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) => setImage(e.target.files[0])}
-                            />
-                        </div>
-                    </div>
-                    <div className="form-actions">
-                        <button type="submit">{editando ? 'Guardar cambios' : 'Crear'}</button>
-                        <button type="button" onClick={() => setFormVisible(false)}>Cancelar</button>
-                    </div>
-                </form>
+                <FormularioStats
+                    key={editando?.id ?? 'crear'}
+                    initialValues={editando ? {
+                        nombre: editando.nombre,
+                        vida: String(editando.vida),
+                        ataque: String(editando.ataque),
+                        defensa: String(editando.defensa),
+                        velocidad: String(editando.velocidad),
+                        tipo: editando.tipo,
+                        url: editando.url
+                    } : undefined}
+                    onSubmit={handleSubmit}
+                    onCancel={() => setFormVisible(false)}
+                    isEditando={!!editando}
+                />
             )}
 
             {!loading && (
-                <table className="tabla-enemigos">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Vida</th>
-                            <th>Ataque</th>
-                            <th>Defensa</th>
-                            <th>Velocidad</th>
-                            <th>Tipo</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {enemigos.map(enemigo => (
-                            <tr key={enemigo.id}>
-                                <td>{enemigo.nombre}</td>
-                                <td>{enemigo.vida}</td>
-                                <td>{enemigo.ataque}</td>
-                                <td>{enemigo.defensa}</td>
-                                <td>{enemigo.velocidad}</td>
-                                <td>{enemigo.tipo}</td>
-                                <td className="acciones">
-                                    <button onClick={() => abrirFormEditar(enemigo)} className="btn-editar">Editar</button>
-                                    <button onClick={() => eliminar(enemigo.id)} className="btn-eliminar">Eliminar</button>
-                                </td>
-                            </tr>
-                        ))}
-                        {enemigos.length === 0 && (
-                            <tr>
-                                <td colSpan="8" className="sin-datos">No hay enemigos registrados</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                <>
+                    <TablaGenerica
+                        datos={enemigos}
+                        columnas={['Nombre', 'Vida', 'Ataque', 'Defensa', 'Velocidad', 'Tipo', 'Acciones']}
+                        llaves={['nombre', 'vida', 'ataque', 'defensa', 'velocidad', 'tipo']}
+                        acciones={
+                            [
+                                {
+                                    nombre: 'Editar',
+                                    onClick: (enemigo) => abrirFormEditar(enemigo),
+                                    clase: 'btn-editar'
+                                },
+                                {
+                                    nombre: 'Borrar',
+                                    onClick: (enemigo) => eliminar(enemigo.id),
+                                    clase: 'btn-eliminar'
+                                }
+                            ]
+                        }
+                    />
+                </>
             )}
-            <Feedback loading={loading} error={error} data={data} />
         </div>
     )
 }

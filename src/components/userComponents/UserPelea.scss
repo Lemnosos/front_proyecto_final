@@ -87,3 +87,15 @@
         pointer-events: none;
     }
 }
+
+@media (max-width: 768px) {
+    .flexContainer-pelea {
+        flex-direction: column;
+
+        .personaje,
+        .enemigo,
+        .panelCentral {
+            width: 100%;
+        }
+    }
+}

@@ -7,15 +7,19 @@ import { Feedback } from '../Feedback'
 export const UserUsuario = () => {
     const BASE_URL = import.meta.env.VITE_URL_RENDER
     const [usuario, setUsuario] = useState(null)
-    const { values, errors, handleChange, serializarFormulario, reset } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
+    const { values, errors, handleChange, reset } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
     const { data, loading, error, consultaApi } = useFetch()
 
     const tieneUsuario = !!usuario
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const formulario = serializarFormulario(e.target)
-        console.log(formulario)
+        await consultaApi(`${BASE_URL}/users/usuarios/${usuario.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ apodo: values.apodo })
+        })
+        traerUsuario()
     }
 
     const traerUsuario = () => {
@@ -50,7 +54,7 @@ export const UserUsuario = () => {
         <div className='flexContainer-usuario'>
             <form onSubmit={handleSubmit}>
                 <ol>
-                    <li><h3>Crear cuenta</h3></li>
+                    <li><h1>Revisar datos de la cuenta</h1></li>
 
                     <li>
                         <label htmlFor='nombre'>Introduce el nombre</label>
@@ -71,7 +75,7 @@ export const UserUsuario = () => {
                         <label htmlFor='email'>Introduce el email</label>
                     </li>
                     <li>
-                        <input id="email" name="email" value={values.email} onChange={handleChange} />
+                        <input id="email" name="email" value={values.email} readOnly />
                         {errors.email && <span className="field-error">{errors.email}</span>}
                     </li>
 
@@ -80,8 +84,6 @@ export const UserUsuario = () => {
                     </li>
                 </ol>
             </form>
-
-            <Feedback />
         </div>
 
     )

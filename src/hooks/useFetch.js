@@ -13,7 +13,6 @@ export const useFetch = () => {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
-
     const BASE_URL = import.meta.env.VITE_URL_RENDER
 
 

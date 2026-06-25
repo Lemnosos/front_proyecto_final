@@ -14,6 +14,12 @@
     }
 }
 
+@media (max-width: 768px) {
+    .registerLayout {
+        flex-direction: column;
+    }
+}
+
 form ol {
     list-style-type: none;
     width: 90%;

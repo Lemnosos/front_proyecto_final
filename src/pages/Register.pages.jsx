@@ -1,12 +1,16 @@
 import { Login, Register, Feedback } from '../components/index'
-import './Register.scss'
+import './Register.pages.scss'
 
 export const RegisterPage = () => {
     return (
-        <div className="registerLayout">
-            <Login />
-            <Register />
-            {/* <Feedback /> */}
-        </div>
+        <>
+            <h1>Registro</h1>
+            <div className="registerLayout">
+                <Login />
+                <Register />
+                <Feedback />
+            </div>
+        </>
+
     )
 }

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useFetch } from '../../hooks/useFetch'
-import { useFormularios } from '../../hooks/useFormularios'
-import { Feedback } from '../Feedback'
+import { Feedback, TablaGenerica } from '../index'
 import './AdminUsuarios.scss'
 
 export const AdminUsuarios = () => {
@@ -31,43 +30,27 @@ export const AdminUsuarios = () => {
     return (
         <div className="admin-usuarios">
             <div className="header">
-                <h3>Listado de los usuarios registrados</h3>
+                <h1>Listado de los usuarios registrados</h1>
             </div>
 
-
-
             {!loading && (
-                <table className="tabla-usuarios">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apodo</th>
-                            <th>Email</th>
-                            <th>Rol</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {usuarios.map(usuario => (
-                            <tr key={usuario.id}>
-                                <td>{usuario.nombre}</td>
-                                <td>{usuario.apodo}</td>
-                                <td>{usuario.email}</td>
-                                <td>{usuario.rol}</td>
-                                <td className="acciones">
-                                    <button onClick={() => eliminar(usuario.id)} className="btn-eliminar">Eliminar</button>
-                                </td>
-                            </tr>
-                        ))}
-                        {usuarios.length === 0 && (
-                            <tr>
-                                <td colSpan="8" className="sin-datos">No hay usuarios registrados</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                <>
+                    <TablaGenerica
+                        columnas={['Nombre', 'Apodo', 'Email', 'Rol', 'Acciones']}
+                        datos={usuarios}
+                        llaves={['nombre', 'apodo', 'email', 'rol']}
+                        acciones={
+                            [
+                                {
+                                    nombre: 'Borrar',
+                                    onClick: (usuario) => eliminar(usuario.id),
+                                    clase: 'btn-eliminar'
+                                }
+                            ]
+                        }
+                    />
+                </>
             )}
-            <Feedback loading={loading} error={error} data={data} />
         </div>
     )
 }

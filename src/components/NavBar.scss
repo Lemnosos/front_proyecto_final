@@ -21,3 +21,10 @@ ul.nav {
   margin-left: auto;
   list-style: none;
 }
+
+@media (max-width: 768px) {
+  .flexContainer-navBar {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

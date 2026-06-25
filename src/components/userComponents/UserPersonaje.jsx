@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useFormularios } from '../../hooks/useFormularios'
 import { useFetch } from '../../hooks/useFetch'
 import caballeroTranquilo from '../../assets/Caballero_tranquilo.jpg'
-import { Feedback } from '../Feedback'
 import './UserPersonaje.scss'
 
 export const UserPersonaje = () => {
@@ -16,31 +15,31 @@ export const UserPersonaje = () => {
     const tienePersonaje = !!personaje
 
     const traerPersonaje = () => {
-        consultaApi(`${BASE_URL}/users/Personaje`, { method: 'GET' })
+        consultaApi(`${BASE_URL}/users/personaje`, { method: 'GET' })
     }
     const handleCrear = (e) => {
-        consultaApi(`${BASE_URL}/users/Personaje`, {
+        consultaApi(`${BASE_URL}/users/personaje`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(values)
         })
     }
     const handleEditar = (e) => {
-        consultaApi(`${BASE_URL}/users/Personaje`, {
+        consultaApi(`${BASE_URL}/users/personaje`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(values)
         })
     }
     const handleBorrar = (e) => {
-        consultaApi(`${BASE_URL}/users/Personaje`, {
+        consultaApi(`${BASE_URL}/users/personaje`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id: personaje?.id })
         })
     }
     const handleKeyDown = (e) => {
-        // Permitimos solo teclas de control
+        // Control de teclas permitidas para no hacer caso de las demas
         const allowedKeys = [
             'ArrowUp',
             'ArrowDown',
@@ -79,7 +78,7 @@ export const UserPersonaje = () => {
 
     return (
         <>
-            <h4>Datos de tu personaje</h4>
+            <h1>Datos de tu personaje</h1>
 
             <div className='flexContainer'>
                 <div className='imgContainer'>
@@ -136,7 +135,6 @@ export const UserPersonaje = () => {
                     </li>
                 </div>
             </div>
-            <Feedback loading={loading} error={error} data={data} />
         </>
     )
 }

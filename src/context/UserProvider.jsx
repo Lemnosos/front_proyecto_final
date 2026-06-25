@@ -79,13 +79,6 @@ export const UserProvider = ({ children }) => {
         }
     }
 
-    // useEffect(() => {
-    //     console.log('renovando token')
-    //     renovarToken()
-    //         .then()
-    //         .catch((error) => { console.log('error en useEffect', error) })
-    // }, [])
-
     useEffect(() => {
         if (!data?.data?.id) return
         const { id, role } = data.data

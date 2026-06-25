@@ -26,6 +26,11 @@ export const useFormularios = (initialValues = {}) => {
         }
     }
 
+    const handleSubmit = (evento) => {
+        evento.preventDefault()
+        const datos = serializarFormulario(evento.target)
+    }
+
     const serializarFormulario = (formularioDOM) => {
         const formData = new FormData(formularioDOM)
         return Object.fromEntries(formData.entries())
@@ -48,6 +53,7 @@ export const useFormularios = (initialValues = {}) => {
         values,
         errors,
         handleChange,
+        handleSubmit,
         serializarFormulario,
         reset
     }

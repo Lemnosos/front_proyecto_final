@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useFetch } from '../../hooks/useFetch'
-import { Feedback } from '../Feedback'
+import { TablaGenerica } from '../index'
 import './UserHistorial.scss'
 
 export const UserHistorial = () => {
@@ -20,34 +20,15 @@ export const UserHistorial = () => {
 
     return (
         <div className="user-historial">
-            <h3>Historial de peleas de tu pesonaje</h3>
+            <h1>Historial de peleas de tu pesonaje</h1>
 
             {!loading && (
-                <table className="tabla-historial">
-                    <thead>
-                        <tr>
-                            <th>Enemigo</th>
-                            <th>Resultado</th>
-                            <th>Turnos</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {historial.map(combate => (
-                            <tr key={combate.id_pelea}>
-                                <td>{combate.nombre_enemigo}</td>
-                                <td>{combate.resultado}</td>
-                                <td>{combate.turnos}</td>
-                            </tr>
-                        ))}
-                        {historial.length === 0 && (
-                            <tr>
-                                <td colSpan="3" className="sin-datos">No hay Historial de combates registrados</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                <TablaGenerica
+                    datos={historial}
+                    columnas={['Enemigo', 'Resultado', 'Turnos']}
+                    llaves={['nombre_enemigo', 'resultado', 'turnos']}
+                />
             )}
-            <Feedback loading={loading} error={error} data={data} />
 
         </div>
     )

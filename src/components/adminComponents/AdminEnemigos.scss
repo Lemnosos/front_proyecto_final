@@ -5,8 +5,14 @@
         align-items: center;
         margin-bottom: 1rem;
 
-        h3 {
-            margin: 0;
+    }
+
+    @media (max-width: 768px) {
+        .header {
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            text-align: center;
         }
     }
 
@@ -23,147 +29,5 @@
         }
     }
 
-    .form-enemigo {
-        background: var(--bg);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
 
-        h4 {
-            margin: 0 0 1rem;
-            color: var(--text-h);
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 1rem;
-
-            label {
-                display: block;
-                font-size: 0.85rem;
-                margin-bottom: 0.25rem;
-                color: var(--text);
-            }
-
-            input,
-            select {
-                width: 100%;
-                padding: 0.4rem 0.5rem;
-                border: 1px solid var(--border);
-                border-radius: 4px;
-                background: var(--bg);
-                color: var(--text-h);
-                box-sizing: border-box;
-            }
-
-            .field-error {
-                display: block;
-                color: #c33;
-                font-size: 0.75rem;
-                margin-top: 0.2rem;
-            }
-        }
-
-        .form-actions {
-            margin-top: 1rem;
-            display: flex;
-            gap: 0.5rem;
-
-            button[type="submit"] {
-                padding: 0.5rem 1rem;
-                background: #4caf50;
-                color: #fff;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-
-                &:hover {
-                    background: #43a047;
-                }
-            }
-
-            button[type="button"] {
-                padding: 0.5rem 1rem;
-                background: #e0e0e0;
-                color: #333;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-
-                &:hover {
-                    background: #ccc;
-                }
-            }
-        }
-    }
-
-    .tabla-enemigos {
-        width: auto;
-        margin: 0 auto;
-        border-collapse: collapse;
-
-        th,
-        td {
-            padding: 0.5rem 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-
-        th {
-            font-size: 0.85rem;
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        td {
-            color: var(--text-h);
-        }
-
-        .sin-datos {
-            text-align: center;
-            color: var(--text);
-            padding: 2rem;
-        }
-
-        .acciones {
-            display: flex;
-            gap: 0.4rem;
-
-            .btn-editar {
-                padding: 0.3rem 0.6rem;
-                background: #ffc107;
-                color: #333;
-                border: none;
-                border-radius: 3px;
-                cursor: pointer;
-                font-size: 0.8rem;
-
-                &:hover {
-                    background: #e0a800;
-                }
-            }
-
-            .btn-eliminar {
-                padding: 0.3rem 0.6rem;
-                background: #e53935;
-                color: #fff;
-                border: none;
-                border-radius: 3px;
-                cursor: pointer;
-                font-size: 0.8rem;
-
-                &:hover {
-                    background: #c62828;
-                }
-            }
-        }
-    }
-
-    .feedback.loading {
-        padding: 2rem;
-        text-align: center;
-        color: var(--text);
-    }
 }

@@ -1,0 +1,110 @@
+.tabla-datos-wrapper {
+    text-align: center;
+}
+
+.tabla-datos {
+    width: auto;
+    margin: 0 auto;
+    border-collapse: collapse;
+
+    th,
+    td {
+        padding: 0.5rem 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+    }
+
+    th {
+        font-size: 0.85rem;
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    td {
+        color: var(--text-h);
+    }
+
+    .sin-datos {
+        text-align: center;
+        color: var(--text);
+        padding: 2rem;
+    }
+
+
+    .acciones {
+        display: flex;
+        gap: 0.4rem;
+
+        .btn-editar {
+            padding: 0.3rem 0.6rem;
+            background: #ffc107;
+            color: #333;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+
+            &:hover {
+                background: #e0a800;
+            }
+        }
+
+        .btn-eliminar {
+            padding: 0.3rem 0.6rem;
+            background: #e53935;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+
+            &:hover {
+                background: #c62828;
+            }
+        }
+    }
+}
+
+.paginacion {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+
+    button {
+        padding: 0.3rem 0.6rem;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--bg);
+        color: var(--text-h);
+        cursor: pointer;
+        font-size: 0.85rem;
+
+        &:hover:not(:disabled) {
+            background: var(--border);
+        }
+
+        &:disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+
+        &.activo {
+            background: #4a90d9;
+            color: #fff;
+            border-color: #4a90d9;
+        }
+    }
+
+    select {
+        margin-left: 0.5rem;
+        padding: 0.3rem 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        background: var(--bg);
+        color: var(--text-h);
+        font-size: 0.85rem;
+    }
+}

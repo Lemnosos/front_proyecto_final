@@ -12,19 +12,19 @@ export const Feedback = () => {
 
             const timer = setTimeout(() => {
                 setVisible(false)
-            }, 1000)
+            }, 5000)
 
             return () => clearTimeout(timer)
         }
-    }, [data])
+    }, [loading, error, data])
 
-    if (!visible) return null
+    if (!visible) return <></>
 
     return (
         <div className="auth-feedback">
             {loading && (
                 <div className="feedback loading">
-                    Cargando más...
+                    Carganding...
                 </div>
             )}
 

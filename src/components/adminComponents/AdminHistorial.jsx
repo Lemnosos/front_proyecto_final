@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useFetch } from '../../hooks/useFetch'
-import { Feedback } from '../Feedback'
+import { TablaGenerica } from '../index'
 import './AdminHistorial.scss'
 
 export const AdminHistorial = () => {
@@ -19,36 +19,15 @@ export const AdminHistorial = () => {
 
     return (
         <div className="admin-historial">
-            <h3>Historial de peleas</h3>
+            <h1>Historial de peleas</h1>
 
             {!loading && (
-                <table className="tabla-historial">
-                    <thead>
-                        <tr>
-                            <th>Personaje</th>
-                            <th>Enemigo</th>
-                            <th>Resultado</th>
-                            <th>Turnos</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {historial.map(combate => (
-                            <tr key={combate.id_pelea}>
-                                <td>{combate.nombre_personaje}</td>
-                                <td>{combate.nombre_enemigo}</td>
-                                <td>{combate.resultado}</td>
-                                <td>{combate.turnos}</td>
-                            </tr>
-                        ))}
-                        {historial.length === 0 && (
-                            <tr>
-                                <td colSpan="8" className="sin-datos">No hay Historial de combates registrados</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+                <TablaGenerica
+                    datos={historial}
+                    columnas={['Personaje', 'Enemigo', 'Resultado', 'Turnos']}
+                    llaves={['nombre_personaje', 'nombre_enemigo', 'resultado', 'turnos']} />
             )}
-            <Feedback loading={loading} error={error} data={data} />
+
         </div>
     )
 }

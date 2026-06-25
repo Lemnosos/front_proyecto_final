@@ -1,4 +1,4 @@
-export const estadoInicial = {
+export const combateInicial = {
     activo: false,
     turno: null,
     hpPersonaje: null,
@@ -11,7 +11,7 @@ export const estadoInicial = {
     resultado: null
 }
 
-export const combatReducer = (state, action) => {
+export const useCombatReducer = (state, action) => {
     switch (action.type) {
         case 'INICIAR_COMBATE': {
             const velPersonaje = action.payload.velocidadPersonaje
@@ -126,13 +126,13 @@ export const combatReducer = (state, action) => {
 
         case 'ABANDONAR': {
             return {
-                ...estadoInicial,
+                ...combateInicial,
                 resultado: 'derrota'
             }
         }
 
         case 'RESETEAR': {
-            return { ...estadoInicial }
+            return { ...combateInicial }
         }
 
         default:

@@ -9,15 +9,14 @@ import { useNavigate } from 'react-router'
 export const AdminNuevoAdmin = () => {
     const navigate = useNavigate()
     const { values, errors, handleChange, serializarFormulario } = useFormularios({ nombre: '', apodo: '', email: '', password: '' })
-    const { register, loading, data, error } = useContext(UserContext)
+    const { register } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const formulario = serializarFormulario(e.target)
         const nuevoUsuario = { ...formulario, rol: 'admin' }
-        register(nuevoUsuario)
-        navigate('admin/usuarios')
-
+        await register(nuevoUsuario)
+        navigate('/admin/usuarios')
     }
 
     return (
@@ -25,7 +24,7 @@ export const AdminNuevoAdmin = () => {
             <form onSubmit={handleSubmit}>
                 <ol>
                     <li>
-                        <h3>Crear cuenta</h3>
+                        <h1>Crear nueva cuenta de administrador</h1>
                     </li>
                     <li>
                         <label htmlFor='nombre'>Introduce el nombre</label>
@@ -53,8 +52,6 @@ export const AdminNuevoAdmin = () => {
                     </li>
                 </ol>
             </form>
-
-            <Feedback loading={loading} error={error} data={data} />
         </div>
     )
 }

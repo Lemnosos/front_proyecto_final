@@ -1,12 +1,10 @@
 import { NavLink } from 'react-router'
 import { UserContext } from '../context/UserContext.jsx'
-import { useFetch } from '../hooks/useFetch.js'
 import { useContext } from 'react'
 import './NavBar.scss'
 
 export const NavBar = () => {
     const { usuario, isLogued, logOut } = useContext(UserContext)
-    const { data } = useFetch()
 
     return (
         <nav>

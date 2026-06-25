@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
 import './App.scss'
 import { NavBar } from './components/NavBar'
 import { Rutas } from './routes/Rutas'
-import { UserContext } from './context/UserContext.jsx'
 
 function App() {
 
