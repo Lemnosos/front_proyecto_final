@@ -14,6 +14,7 @@ export const UserUsuario = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (!usuario) return
         await consultaApi(`${BASE_URL}/users/usuarios/${usuario.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
