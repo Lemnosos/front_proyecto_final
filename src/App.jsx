@@ -10,7 +10,7 @@ function App() {
         <NavBar />
       </header>
       <main>
-        <h2>Bienvenido a Tortazos y mamporros</h2>
+        <h2>Tortazos y mamporros</h2>
         <Rutas />
       </main>
       <footer>

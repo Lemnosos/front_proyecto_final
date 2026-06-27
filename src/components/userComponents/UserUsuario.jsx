@@ -52,38 +52,28 @@ export const UserUsuario = () => {
     }, [usuario])
 
     return (
-        <div className='flexContainer-usuario'>
+        <div className='flexContainer-usuario page-center'>
             <form onSubmit={handleSubmit}>
-                <ol>
-                    <li><h1>Revisar datos de la cuenta</h1></li>
+                <h1>Revisar datos de la cuenta</h1>
 
-                    <li>
-                        <label htmlFor='nombre'>Introduce el nombre</label>
-                    </li>
-                    <li>
-                        <input id="nombre" name="nombre" value={values.nombre} onChange={handleChange} />
-                    </li>
+                <div className="campo">
+                    <label htmlFor='nombre'>Introduce el nombre</label>
+                    <input id="nombre" name="nombre" value={values.nombre} onChange={handleChange} />
+                </div>
 
-                    <li>
-                        <label htmlFor='apodo'>Introduce el apodo</label>
-                    </li>
-                    <li>
-                        <input id="apodo" name="apodo" value={values.apodo} onChange={handleChange} />
-                        {errors.apodo && <span className="field-error">{errors.apodo}</span>}
-                    </li>
+                <div className="campo">
+                    <label htmlFor='apodo'>Introduce el apodo</label>
+                    <input id="apodo" name="apodo" value={values.apodo} onChange={handleChange} />
+                    {errors.apodo && <span className="field-error">{errors.apodo}</span>}
+                </div>
 
-                    <li>
-                        <label htmlFor='email'>Introduce el email</label>
-                    </li>
-                    <li>
-                        <input id="email" name="email" value={values.email} readOnly />
-                        {errors.email && <span className="field-error">{errors.email}</span>}
-                    </li>
+                <div className="campo">
+                    <label htmlFor='email'>Introduce el email</label>
+                    <input id="email" name="email" value={values.email} readOnly />
+                    {errors.email && <span className="field-error">{errors.email}</span>}
+                </div>
 
-                    <li>
-                        <input type="submit" value="Actualizar cuenta" />
-                    </li>
-                </ol>
+                <input type="submit" value="Actualizar cuenta" />
             </form>
         </div>
 

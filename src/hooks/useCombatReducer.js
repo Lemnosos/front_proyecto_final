@@ -8,7 +8,10 @@ export const combateInicial = {
     defensaJugador: 0,
     defensaEnemigo: 0,
     turnos: 0,
-    resultado: null
+    resultado: null,
+    log: [],
+    nombreJugador: '',
+    nombreEnemigo: ''
 }
 
 export const useCombatReducer = (state, action) => {
@@ -28,7 +31,13 @@ export const useCombatReducer = (state, action) => {
                 defensaJugador: 0,
                 defensaEnemigo: 0,
                 turnos: 0,
-                resultado: null
+                resultado: null,
+                log: [{
+                    turno: 0, quien: 'Sistema', accion: 'inicio',
+                    detalle: `¡Comienza el combate! Empieza ${primerTurno === 'jugador' ? action.payload.nombreJugador : action.payload.nombreEnemigo}`
+                }],
+                nombreJugador: action.payload.nombreJugador,
+                nombreEnemigo: action.payload.nombreEnemigo
             }
         }
 
@@ -43,7 +52,18 @@ export const useCombatReducer = (state, action) => {
                     turnos: state.turnos + 1,
                     activo: false,
                     turno: null,
-                    resultado: 'victoria'
+                    resultado: 'victoria',
+                    log: [...state.log.slice(-9), {
+                        turno: state.turnos + 1,
+                        quien: state.nombreJugador,
+                        accion: 'ataque',
+                        detalle: `Ataca causando ${dano} de daño. ${state.nombreEnemigo} ha sido derrotado.`
+                    }, {
+                        turno: state.turnos + 1,
+                        quien: 'Sistema',
+                        accion: 'resultado',
+                        detalle: '¡Victoria!'
+                    }]
                 }
             }
             return {
@@ -51,7 +71,13 @@ export const useCombatReducer = (state, action) => {
                 hpEnemigo: nuevoHp,
                 defensaEnemigo: 0,
                 turnos: state.turnos + 1,
-                turno: 'enemigo'
+                turno: 'enemigo',
+                log: [...state.log.slice(-9), {
+                    turno: state.turnos + 1,
+                    quien: state.nombreJugador,
+                    accion: 'ataque',
+                    detalle: `Ataca causando ${dano} de daño (vida de ${state.nombreEnemigo}: ${nuevoHp})`
+                }]
             }
         }
 
@@ -60,7 +86,13 @@ export const useCombatReducer = (state, action) => {
                 ...state,
                 defensaJugador: action.payload.defensa,
                 turnos: state.turnos + 1,
-                turno: 'enemigo'
+                turno: 'enemigo',
+                log: [...state.log.slice(-9), {
+                    turno: state.turnos + 1,
+                    quien: state.nombreJugador,
+                    accion: 'defensa',
+                    detalle: `Se defiende (escudo: ${action.payload.defensa})`
+                }]
             }
         }
 
@@ -71,7 +103,13 @@ export const useCombatReducer = (state, action) => {
                 ...state,
                 hpPersonaje: nuevoHp,
                 turnos: state.turnos + 1,
-                turno: 'enemigo'
+                turno: 'enemigo',
+                log: [...state.log.slice(-9), {
+                    turno: state.turnos + 1,
+                    quien: state.nombreJugador,
+                    accion: 'curacion',
+                    detalle: `Se cura ${curacion} de salud (vida: ${nuevoHp})`
+                }]
             }
         }
 
@@ -89,7 +127,18 @@ export const useCombatReducer = (state, action) => {
                         turnos: state.turnos + 1,
                         activo: false,
                         turno: null,
-                        resultado: 'derrota'
+                        resultado: 'derrota',
+                        log: [...state.log.slice(-9), {
+                            turno: state.turnos + 1,
+                            quien: state.nombreEnemigo,
+                            accion: 'ataque',
+                            detalle: `Ataca causando ${dano} de daño. ${state.nombreJugador} ha sido derrotado.`
+                        }, {
+                            turno: state.turnos + 1,
+                            quien: 'Sistema',
+                            accion: 'resultado',
+                            detalle: '¡Derrota!'
+                        }]
                     }
                 }
                 return {
@@ -97,7 +146,13 @@ export const useCombatReducer = (state, action) => {
                     hpPersonaje: nuevoHp,
                     defensaJugador: 0,
                     turnos: state.turnos + 1,
-                    turno: 'jugador'
+                    turno: 'jugador',
+                    log: [...state.log.slice(-9), {
+                        turno: state.turnos + 1,
+                        quien: state.nombreEnemigo,
+                        accion: 'ataque',
+                        detalle: `Ataca causando ${dano} de daño (vida de ${state.nombreJugador}: ${nuevoHp})`
+                    }]
                 }
             }
 
@@ -106,7 +161,13 @@ export const useCombatReducer = (state, action) => {
                     ...state,
                     defensaEnemigo: defensa,
                     turnos: state.turnos + 1,
-                    turno: 'jugador'
+                    turno: 'jugador',
+                    log: [...state.log.slice(-9), {
+                        turno: state.turnos + 1,
+                        quien: state.nombreEnemigo,
+                        accion: 'defensa',
+                        detalle: `Se defiende (escudo: ${defensa})`
+                    }]
                 }
             }
 
@@ -117,7 +178,13 @@ export const useCombatReducer = (state, action) => {
                     ...state,
                     hpEnemigo: nuevoHp,
                     turnos: state.turnos + 1,
-                    turno: 'jugador'
+                    turno: 'jugador',
+                    log: [...state.log.slice(-9), {
+                        turno: state.turnos + 1,
+                        quien: state.nombreEnemigo,
+                        accion: 'curacion',
+                        detalle: `Se cura ${curacion} de salud (vida: ${nuevoHp})`
+                    }]
                 }
             }
 
@@ -127,7 +194,8 @@ export const useCombatReducer = (state, action) => {
         case 'ABANDONAR': {
             return {
                 ...combateInicial,
-                resultado: 'derrota'
+                resultado: 'derrota',
+                log: [{ turno: 0, quien: 'Sistema', accion: 'resultado', detalle: 'Has abandonado el combate. Derrota.' }]
             }
         }
 

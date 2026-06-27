@@ -28,7 +28,7 @@ export const AdminUsuarios = () => {
     }
 
     return (
-        <div className="admin-usuarios">
+        <div className="admin-usuarios page-center">
             <div className="header">
                 <h1>Listado de los usuarios registrados</h1>
             </div>
@@ -36,7 +36,7 @@ export const AdminUsuarios = () => {
             {!loading && (
                 <>
                     <TablaGenerica
-                        columnas={['Nombre', 'Apodo', 'Email', 'Rol', 'Acciones']}
+                        columnas={['Nombre', 'Apodo', 'Email', 'Rol']}
                         datos={usuarios}
                         llaves={['nombre', 'apodo', 'email', 'rol']}
                         acciones={

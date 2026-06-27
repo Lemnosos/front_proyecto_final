@@ -36,6 +36,7 @@ export const TablaGenerica = ({ datos = [], columnas = [], llaves, acciones = []
                         {columnas.map((titulo) => (
                             <th key={titulo}>{titulo}</th>
                         ))}
+                        {acciones.length != 0 && <th>Acciones</th>}
                     </tr>
                 </thead>
                 <tbody>
@@ -44,11 +45,11 @@ export const TablaGenerica = ({ datos = [], columnas = [], llaves, acciones = []
                             <tr key={dato.id ?? index}>
                                 {
                                     columnas.map((columna, idxColumna) => (
-                                        <td key={columna}>{dato[llaves ? llaves[idxColumna] : columna.toLowerCase()]}</td>
+                                        <td key={columna} data-label={columna}>{dato[llaves ? llaves[idxColumna] : columna.toLowerCase()]}</td>
                                     ))
                                 }
                                 {acciones.length != 0 &&
-                                    <td className="acciones">
+                                    <td className="acciones" data-label="Acciones">
                                         {acciones.map((accion) => (
                                             <button
                                                 key={accion.nombre}

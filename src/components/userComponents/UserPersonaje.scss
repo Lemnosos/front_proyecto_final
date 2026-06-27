@@ -4,19 +4,29 @@
     gap: 1%;
     text-align: center;
 
-    li {
-        list-style: none;
-    }
-
     .margin-top {
         margin-top: 1rem;
     }
 
+    .campo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 1rem;
+
+        label {
+            margin-bottom: 0.25rem;
+        }
+    }
+
     .imgContainer {
         width: 33%;
+        display: flex;
 
-        .img {
+        img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     }
 

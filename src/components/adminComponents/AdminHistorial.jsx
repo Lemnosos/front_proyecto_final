@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useFetch } from '../../hooks/useFetch'
 import { TablaGenerica } from '../index'
-import './AdminHistorial.scss'
 
 export const AdminHistorial = () => {
     const BASE_URL = import.meta.env.VITE_URL_RENDER
@@ -18,7 +17,7 @@ export const AdminHistorial = () => {
     const historial = data?.data?.combates || []
 
     return (
-        <div className="admin-historial">
+        <div className="admin-historial page-center">
             <h1>Historial de peleas</h1>
 
             {!loading && (

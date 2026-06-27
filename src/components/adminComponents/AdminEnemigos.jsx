@@ -96,7 +96,7 @@ export const AdminEnemigos = () => {
                 <>
                     <TablaGenerica
                         datos={enemigos}
-                        columnas={['Nombre', 'Vida', 'Ataque', 'Defensa', 'Velocidad', 'Tipo', 'Acciones']}
+                        columnas={['Nombre', 'Vida', 'Ataque', 'Defensa', 'Velocidad', 'Tipo']}
                         llaves={['nombre', 'vida', 'ataque', 'defensa', 'velocidad', 'tipo']}
                         acciones={
                             [

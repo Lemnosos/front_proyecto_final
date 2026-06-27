@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import { useFormularios } from '../../hooks/useFormularios'
 import { UserContext } from '../../context/UserContext'
-import './AdminNuevoAdmin.scss'
 import { Feedback } from '../Feedback'
 import { useNavigate } from 'react-router'
 
@@ -20,7 +19,7 @@ export const AdminNuevoAdmin = () => {
     }
 
     return (
-        <div className="admin-nuevo-admin">
+        <div className="admin-nuevo-admin page-center">
             <form onSubmit={handleSubmit}>
                 <ol>
                     <li>

@@ -77,7 +77,7 @@ export const UserPersonaje = () => {
     }, [personaje])
 
     return (
-        <>
+        <div className="page-center">
             <h1>Datos de tu personaje</h1>
 
             <div className='flexContainer'>
@@ -86,44 +86,34 @@ export const UserPersonaje = () => {
                 </div>
 
                 <div className='statContainer'>
-                    <li><h3>{tienePersonaje ? 'Modificar personaje' : 'Crear personaje'}</h3></li>
+                    <h3>{tienePersonaje ? 'Modificar personaje' : 'Crear personaje'}</h3>
 
-                    <li className='margin-top'>
+                    <div className="campo">
                         <label htmlFor='nombre'>Nombre para el personaje</label>
-                    </li>
-                    <li>
                         <input id="nombre" name="nombre" placeholder="Nombre" value={values.nombre} onChange={handleChange} />
-                    </li>
+                    </div>
 
-                    <li className='margin-top'>
+                    <div className="campo">
                         <label htmlFor='vida'>Introduce la vida</label>
-                    </li>
-                    <li>
                         <input type='number' id="vida" name="vida" placeholder="100" min="50" max="200" value={values.vida} onChange={handleChange} onKeyDown={handleKeyDown} />
-                    </li>
+                    </div>
 
-                    <li className='margin-top'>
+                    <div className="campo">
                         <label htmlFor='ataque'>Introduce el ataque</label>
-                    </li>
-                    <li>
                         <input type='number' id="ataque" name="ataque" placeholder="100" min="50" max="200" value={values.ataque} onChange={handleChange} onKeyDown={handleKeyDown} />
-                    </li>
+                    </div>
 
-                    <li className='margin-top'>
+                    <div className="campo">
                         <label htmlFor='defensa'>Introduce la defensa</label>
-                    </li>
-                    <li>
                         <input type='number' id="defensa" name="defensa" placeholder="100" min="50" max="200" value={values.defensa} onChange={handleChange} onKeyDown={handleKeyDown} />
-                    </li>
+                    </div>
 
-                    <li className='margin-top'>
+                    <div className="campo">
                         <label htmlFor='velocidad'>Introduce la velocidad</label>
-                    </li>
-                    <li>
                         <input type='number' id="velocidad" name="velocidad" placeholder="100" min="50" max="200" value={values.velocidad} onChange={handleChange} onKeyDown={handleKeyDown} />
-                    </li>
+                    </div>
 
-                    <li className='margin-top'>
+                    <div className="margin-top">
                         {tienePersonaje ? (
                             <>
                                 <button onClick={handleEditar}>Editar personaje</button>
@@ -132,9 +122,9 @@ export const UserPersonaje = () => {
                         ) : (
                             <button onClick={handleCrear}>Crear personaje</button>
                         )}
-                    </li>
+                    </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

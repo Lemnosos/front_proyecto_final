@@ -31,7 +31,9 @@ export const UserPelea = () => {
                 vidaMaxPersonaje: personaje.vida,
                 vidaMaxEnemigo: enemigo.vida,
                 velocidadPersonaje: personaje.velocidad,
-                velocidadEnemigo: enemigo.velocidad
+                velocidadEnemigo: enemigo.velocidad,
+                nombreJugador: personaje.nombre,
+                nombreEnemigo: enemigo.nombre
             }
         })
     }
@@ -138,7 +140,7 @@ export const UserPelea = () => {
         <>
             <h1>Espacio de pelea contra enemigos</h1>
 
-            <div className='flexContainer-pelea'>
+            <div className='gridContainer-pelea'>
 
                 {/* PERSONAJE */}
                 <div className='personaje'>
@@ -222,16 +224,17 @@ export const UserPelea = () => {
                     {combate.activo && (
                         <>
                             {combate.turno === 'jugador' && (
-                                <>
+                                <div className='acciones-fila'>
                                     <button onClick={atacar}>Atacar</button>
                                     <button onClick={defender}>Defender</button>
                                     <button onClick={curar}>Curar</button>
-                                </>
+                                </div>
                             )}
                             {combate.turno === 'enemigo' && (
                                 <p>Turno del enemigo...</p>
                             )}
                             <button onClick={abandonarCombate}>Abandonar combate</button>
+
                         </>
                     )}
                 </div>
@@ -250,7 +253,18 @@ export const UserPelea = () => {
                         </ol>
                     </div>
                 </div>
+
+                <textarea
+                    className="combat-log"
+                    readOnly
+                    rows={10}
+                    value={combate.log.map(entry =>
+                        `Turno ${entry.turno} — ${entry.quien}: ${entry.detalle}`
+                    ).join('\n')}
+                />
+
             </div>
+
         </>
     )
 }
