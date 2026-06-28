@@ -5,6 +5,7 @@ export * from './adminComponents/AdminEnemigos'
 export * from './adminComponents/AdminUsuarios'
 export * from './adminComponents/AdminHistorial'
 export * from './adminComponents/AdminNuevoAdmin'
+export * from './adminComponents/AdminEstadisticas'
 
 export * from './userComponents/UserHistorial'
 export * from './userComponents/UserPelea'

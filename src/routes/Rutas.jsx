@@ -11,6 +11,7 @@ const AdminEnemigos = lazy(() => import('../components/adminComponents/AdminEnem
 const AdminHistorial = lazy(() => import('../components/adminComponents/AdminHistorial').then(m => ({ default: m.AdminHistorial })))
 const AdminNuevoAdmin = lazy(() => import('../components/adminComponents/AdminNuevoAdmin').then(m => ({ default: m.AdminNuevoAdmin })))
 const AdminUsuarios = lazy(() => import('../components/adminComponents/AdminUsuarios').then(m => ({ default: m.AdminUsuarios })))
+const AdminEstadisticas = lazy(() => import('../components/adminComponents/AdminEstadisticas').then(m => ({ default: m.AdminEstadisticas })))
 
 const UserHistorial = lazy(() => import('../components/userComponents/UserHistorial').then(m => ({ default: m.UserHistorial })))
 const UserPelea = lazy(() => import('../components/userComponents/UserPelea').then(m => ({ default: m.UserPelea })))
@@ -43,6 +44,7 @@ export const Rutas = () => {
                     <Route path="usuarios" element={<AdminUsuarios />} />
                     <Route path="historial" element={<AdminHistorial />} />
                     <Route path="nuevoAdmin" element={<AdminNuevoAdmin />} />
+                    <Route path="estadisticas" element={<AdminEstadisticas />} />
                 </Route>
 
                 <Route path="/*" element={<Navigate to="/" />} />

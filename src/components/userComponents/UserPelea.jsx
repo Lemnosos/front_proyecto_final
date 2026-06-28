@@ -243,6 +243,42 @@ export const UserPelea = () => {
                 <div className='enemigo'>
                     <h4>Estadisticas del {enemigo?.nombre}</h4>
                     <div className='imgContainer'>
+
+                        <AnimatePresence>
+                            {/*CURAR */}
+                            {healing && (
+                                <motion.div
+                                    className="aura"
+                                    initial={{ scale: 0.5, opacity: 0 }}
+                                    animate={{ scale: [1, 1.6, 1.2], opacity: [0, 1, 0] }}
+                                    exit={{ scale: 0.5, opacity: 0 }}
+                                    transition={{ duration: 1.0 }}
+                                />
+                            )}
+
+                            {/*DEFENDER */}
+                            {defending && (
+                                <motion.div
+                                    className="shield"
+                                    initial={{ scale: 0.5, opacity: 0 }}
+                                    animate={{ scale: [1, 1.4, 1], opacity: [0, 1, 0.8] }}
+                                    exit={{ scale: 0.5, opacity: 0 }}
+                                    transition={{ duration: 0.9 }}
+                                />
+                            )}
+
+                            {/*ATACAR */}
+                            {attacking && (
+                                <motion.img
+                                    src={espada}
+                                    className="sword"
+                                    initial={{ x: 0, y: 0, opacity: 1, rotate: -45 }}
+                                    animate={{ x: swordTarget.x, y: swordTarget.y, opacity: 0, rotate: 0 }}
+                                    transition={{ duration: 3 }}
+                                />
+                            )}
+                        </AnimatePresence>
+
                         <img src={enemigo?.url} alt={enemigo?.nombre} ref={enemyRef} />
                     </div>
                     <div className='estadisticas'>

@@ -76,6 +76,11 @@ export const NavBar = () => {
                                 Nuevo Admin
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to='/admin/estadisticas' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                Estadísticas
+                            </NavLink>
+                        </li>
                     </>
                 )}
                 {isLogued &&
