@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef, useReducer } from 'react'
+import { useState, useEffect, useRef, useReducer, useMemo } from 'react'
 import { motion, AnimatePresence } from "framer-motion";
 import { useFetch } from '../../hooks/useFetch'
-import espada from '../../assets/espada.jpg'
 import { useCombatReducer, combateInicial } from '../../hooks/useCombatReducer'
 import './UserPelea.scss'
 
@@ -12,14 +11,13 @@ export const UserPelea = () => {
     const [enemigo, setEnemigo] = useState(null)
     const [combate, dispatch] = useReducer(useCombatReducer, combateInicial)
 
-    const [healing, setHealing] = useState(false);
-    const [defending, setDefending] = useState(false);
-    const [attacking, setAttacking] = useState(false);
+    const [animJugador, setAnimJugador] = useState(null);
+    const [animEnemigo, setAnimEnemigo] = useState(null);
     const [swordTarget, setSwordTarget] = useState({ x: 0, y: 0 });
     const charRef = useRef(null);
     const enemyRef = useRef(null);
 
-    const { data, loading, error, consultaApi } = useFetch();
+    const { data, consultaApi } = useFetch();
 
     const iniciarCombate = () => {
         if (!personaje || !enemigo) return
@@ -53,26 +51,28 @@ export const UserPelea = () => {
         dispatch({ type: 'ABANDONAR' })
     }
 
+    const logText = useMemo(() =>
+        combate.log.map(entry => `Turno ${entry.turno} — ${entry.quien}: ${entry.detalle}`).join('\n'),
+        [combate.log]
+    )
+
     const nuevaPelea = () => {
         consultaApi(`${BASE_URL}/users/enemigo`, { method: 'GET' })
         dispatch({ type: 'RESETEAR' })
     }
 
-    //curar
     const curar = () => {
         if (!personaje) return
         dispatch({ type: 'CURAR_JUGADOR' })
-        setHealing(true);
-    };
+        setAnimJugador('curar')
+    }
 
-    //defender
     const defender = () => {
         if (!personaje) return
         dispatch({ type: 'DEFENDER_JUGADOR', payload: { defensa: personaje.defensa } })
-        setDefending(true);
-    };
+        setAnimJugador('defender')
+    }
 
-    //atacar
     const atacar = () => {
         if (!personaje || !enemigo) return
         const charRect = charRef.current.getBoundingClientRect()
@@ -81,9 +81,8 @@ export const UserPelea = () => {
         const dy = (enemyRect.top + enemyRect.height / 2) - (charRect.top + charRect.height / 2)
         setSwordTarget({ x: dx, y: dy })
         dispatch({ type: 'ATACAR', payload: { ataque: personaje.ataque } })
-        setAttacking(true);
-        setTimeout(() => setAttacking(false), 3000);
-    };
+        setAnimJugador('atacar')
+    }
 
     useEffect(() => {
         Promise.all([
@@ -101,7 +100,9 @@ export const UserPelea = () => {
         if (!combate.activo || combate.turno !== 'enemigo') return
         const acciones = ['atacar', 'defender', 'curar']
         const accion = acciones[Math.floor(Math.random() * 3)]
-        const timer = setTimeout(() => {
+
+        setAnimEnemigo(accion)
+        const dispatchTimer = setTimeout(() => {
             dispatch({
                 type: 'TURNO_ENEMIGO',
                 payload: {
@@ -112,13 +113,13 @@ export const UserPelea = () => {
                 }
             })
         }, 3000)
-        return () => clearTimeout(timer)
+        return () => clearTimeout(dispatchTimer)
     }, [combate.activo, combate.turno, enemigo])
 
     useEffect(() => {
         if (combate.turno === 'jugador' || combate.resultado) {
-            setHealing(false)
-            setDefending(false)
+            setAnimJugador(null)
+            setAnimEnemigo(null)
         }
     }, [combate.turno, combate.resultado])
 
@@ -149,8 +150,7 @@ export const UserPelea = () => {
                     <div className='imgContainer'>
 
                         <AnimatePresence>
-                            {/*CURAR */}
-                            {healing && (
+                            {animJugador === 'curar' && (
                                 <motion.div
                                     className="aura"
                                     initial={{ scale: 0.5, opacity: 0 }}
@@ -160,8 +160,7 @@ export const UserPelea = () => {
                                 />
                             )}
 
-                            {/*DEFENDER */}
-                            {defending && (
+                            {animJugador === 'defender' && (
                                 <motion.div
                                     className="shield"
                                     initial={{ scale: 0.5, opacity: 0 }}
@@ -171,10 +170,9 @@ export const UserPelea = () => {
                                 />
                             )}
 
-                            {/*ATACAR */}
-                            {attacking && (
+                            {animJugador === 'atacar' && (
                                 <motion.img
-                                    src={espada}
+                                    src="https://res.cloudinary.com/dymas3eqs/image/upload/f_auto/v1782743443/espada_snu3o8.jpg"
                                     className="sword"
                                     initial={{ x: 0, y: 0, opacity: 1, rotate: -45 }}
                                     animate={{ x: swordTarget.x, y: swordTarget.y, opacity: 0, rotate: 0 }}
@@ -186,17 +184,17 @@ export const UserPelea = () => {
                         {/* IMAGEN PERSONAJE */}
                         {
                             !combate.resultado &&
-                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/v1782226455/imagenes/caballero_tranquilo.jpg"
+                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/f_auto/v1782226455/imagenes/caballero_tranquilo.jpg"
                                 alt='Caballero del personaje' ref={charRef} />
                         }
                         {
                             combate.resultado === 'victoria' &&
-                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/v1782226477/imagenes/caballero_victorioso.jpg"
+                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/f_auto/v1782226477/imagenes/caballero_victorioso.jpg" loading="lazy"
                                 alt='Caballero del personaje' ref={charRef} />
                         }
                         {
                             combate.resultado === 'derrota' &&
-                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/v1782226499/imagenes/caballer_derrotado.jpg"
+                            <img src="https://res.cloudinary.com/dymas3eqs/image/upload/f_auto/v1782226499/imagenes/caballer_derrotado.jpg" loading="lazy"
                                 alt='Caballero del personaje' ref={charRef} />
                         }
 
@@ -245,8 +243,7 @@ export const UserPelea = () => {
                     <div className='imgContainer'>
 
                         <AnimatePresence>
-                            {/*CURAR */}
-                            {healing && (
+                            {animEnemigo === 'curar' && (
                                 <motion.div
                                     className="aura"
                                     initial={{ scale: 0.5, opacity: 0 }}
@@ -256,8 +253,7 @@ export const UserPelea = () => {
                                 />
                             )}
 
-                            {/*DEFENDER */}
-                            {defending && (
+                            {animEnemigo === 'defender' && (
                                 <motion.div
                                     className="shield"
                                     initial={{ scale: 0.5, opacity: 0 }}
@@ -267,14 +263,14 @@ export const UserPelea = () => {
                                 />
                             )}
 
-                            {/*ATACAR */}
-                            {attacking && (
+                            {animEnemigo === 'atacar' && (
                                 <motion.img
-                                    src={espada}
+                                    src="https://res.cloudinary.com/dymas3eqs/image/upload/f_auto/v1782743443/espada_snu3o8.jpg"
                                     className="sword"
-                                    initial={{ x: 0, y: 0, opacity: 1, rotate: -45 }}
-                                    animate={{ x: swordTarget.x, y: swordTarget.y, opacity: 0, rotate: 0 }}
-                                    transition={{ duration: 3 }}
+                                    initial={{ scale: 0.3, opacity: 0, rotate: 45 }}
+                                    animate={{ scale: [1, 1.3, 1], opacity: [0, 1, 0] }}
+                                    exit={{ scale: 0.3, opacity: 0 }}
+                                    transition={{ duration: 0.8 }}
                                 />
                             )}
                         </AnimatePresence>
@@ -294,9 +290,7 @@ export const UserPelea = () => {
                     className="combat-log"
                     readOnly
                     rows={10}
-                    value={combate.log.map(entry =>
-                        `Turno ${entry.turno} — ${entry.quien}: ${entry.detalle}`
-                    ).join('\n')}
+                    value={logText}
                 />
 
             </div>

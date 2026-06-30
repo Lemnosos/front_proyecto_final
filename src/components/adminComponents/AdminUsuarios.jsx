@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useFetch } from '../../hooks/useFetch'
 import { Feedback, TablaGenerica } from '../index'
 import './AdminUsuarios.scss'
@@ -27,6 +27,10 @@ export const AdminUsuarios = () => {
         cargarUsuarios()
     }
 
+    const acciones = useMemo(() => [
+        { nombre: 'Borrar', onClick: (usuario) => eliminar(usuario.id), clase: 'btn-eliminar' }
+    ], [])
+
     return (
         <div className="admin-usuarios page-center">
             <div className="header">
@@ -39,15 +43,7 @@ export const AdminUsuarios = () => {
                         columnas={['Nombre', 'Apodo', 'Email', 'Rol']}
                         datos={usuarios}
                         llaves={['nombre', 'apodo', 'email', 'rol']}
-                        acciones={
-                            [
-                                {
-                                    nombre: 'Borrar',
-                                    onClick: (usuario) => eliminar(usuario.id),
-                                    clase: 'btn-eliminar'
-                                }
-                            ]
-                        }
+                        acciones={acciones}
                     />
                 </>
             )}

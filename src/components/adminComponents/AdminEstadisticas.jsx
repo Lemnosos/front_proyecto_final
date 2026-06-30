@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useFetch } from '../../hooks/useFetch'
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import './AdminEstadisticas.scss'
@@ -19,10 +19,10 @@ export const AdminEstadisticas = () => {
 
     const d = data.data
 
-    const resultadoData = [
+    const resultadoData = useMemo(() => [
         { name: 'Victorias', value: d.victorias },
         { name: 'Derrotas', value: d.derrotas }
-    ]
+    ], [d.victorias, d.derrotas])
 
     return (
         <div className="admin-estadisticas page-center">

@@ -1,29 +1,24 @@
-import { useState } from 'react'
+import { useState, useCallback, memo } from 'react'
 import { useFormularios } from '../hooks/useFormularios'
 import './FormularioStats.scss'
 
-export const FormularioStats = (
-    {
-        initialValues =
-        {
-            nombre: '',
-            vida: '',
-            ataque: '',
-            defensa: '',
-            velocidad: '',
-            tipo: 'normal',
-            url: ''
-        },
-        onSubmit,
-        onCancel,
-        isEditando = false
-    }
-) => {
+const FORM_INICIAL = { nombre: '', vida: '', ataque: '', defensa: '', velocidad: '', tipo: 'normal', url: '' }
+
+export const FormularioStats = memo(({ initialValues = FORM_INICIAL, onSubmit, onCancel, isEditando = false }) => {
     const { values, handleChange } = useFormularios(initialValues)
     const [image, setImage] = useState(null);
 
+    const handleSubmit = useCallback((e) => {
+        e.preventDefault()
+        onSubmit(values, image)
+    }, [onSubmit, values, image])
+
+    const handleFileChange = useCallback((e) => {
+        setImage(e.target.files[0])
+    }, [])
+
     return (
-        <form onSubmit={(e) => { e.preventDefault(); onSubmit(values, image); }} className="form-enemigos">
+        <form onSubmit={handleSubmit} className="form-enemigos">
             <h2>{isEditando ? 'Editar enemigo' : 'Nuevo enemigo'}</h2>
             {isEditando ? (
                 <div className="edit-layout">
@@ -99,7 +94,7 @@ export const FormularioStats = (
                         <input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => setImage(e.target.files[0])}
+                            onChange={handleFileChange}
                         />
                     </div>
                 </div>
@@ -110,4 +105,4 @@ export const FormularioStats = (
             </div>
         </form>
     )
-}
+})

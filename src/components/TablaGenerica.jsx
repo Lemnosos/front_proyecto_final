@@ -1,14 +1,14 @@
-import { useState } from 'react'
+import { useState, useMemo, memo } from 'react'
 import './TablaGenerica.scss'
 
-export const TablaGenerica = ({ datos = [], columnas = [], llaves, acciones = [] }) => {
+export const TablaGenerica = memo(({ datos = [], columnas = [], llaves, acciones = [] }) => {
     const [paginaActual, setPaginaActual] = useState(1)
     const [itemsPorPagina, setItemsPorPagina] = useState(10)
 
     const totalPaginas = itemsPorPagina === Infinity ? 1 : Math.ceil(datos.length / itemsPorPagina)
     const inicio = (paginaActual - 1) * itemsPorPagina
     const fin = itemsPorPagina === Infinity ? datos.length : inicio + itemsPorPagina
-    const datosPagina = datos.slice(inicio, fin)
+    const datosPagina = useMemo(() => datos.slice(inicio, fin), [datos, inicio, fin])
 
     const cambiarPagina = (pagina) => {
         setPaginaActual(Math.max(1, Math.min(pagina, totalPaginas)))
@@ -20,10 +20,11 @@ export const TablaGenerica = ({ datos = [], columnas = [], llaves, acciones = []
         setPaginaActual(1)
     }
 
-    const numerosPagina = []
-    for (let i = 1; i <= totalPaginas; i++) {
-        numerosPagina.push(i)
-    }
+    const numerosPagina = useMemo(() => {
+        const arr = []
+        for (let i = 1; i <= totalPaginas; i++) arr.push(i)
+        return arr
+    }, [totalPaginas])
 
     if (datos.length === 0 && columnas.length === 0 && acciones.length === 0)
         return <p>No se puede generar la tabla</p>
@@ -112,4 +113,4 @@ export const TablaGenerica = ({ datos = [], columnas = [], llaves, acciones = []
             )}
         </div>
     )
-}
+})

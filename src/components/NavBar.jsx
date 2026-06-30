@@ -3,6 +3,8 @@ import { UserContext } from '../context/UserContext.jsx'
 import { useContext } from 'react'
 import './NavBar.scss'
 
+const navLinkClass = ({ isActive }) => isActive ? 'activo' : 'normal'
+
 export const NavBar = () => {
     const { usuario, isLogued, logOut } = useContext(UserContext)
 
@@ -14,14 +16,14 @@ export const NavBar = () => {
                         <li>
                             <NavLink
                                 to='/'
-                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                className={navLinkClass}>
                                 Inicio
                             </NavLink>
                         </li>
                         <li>
                             <NavLink
                                 to='/registro'
-                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                className={navLinkClass}>
                                 Registro
                             </NavLink>
                         </li>
@@ -31,25 +33,25 @@ export const NavBar = () => {
                     <>
                         <li>
                             <NavLink to='/user/personaje'
-                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                className={navLinkClass}>
                                 Personaje
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to='/user/pelea'
-                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                className={navLinkClass}>
                                 Combatir
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to='/user/usuario'
-                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                className={navLinkClass}>
                                 Revisar cuenta
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to='/user/historial'
-                                className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                                className={navLinkClass}>
                                 Historial de combates
                             </NavLink>
                         </li>
@@ -57,27 +59,27 @@ export const NavBar = () => {
                 {isLogued && usuario?.role === 'admin' && (
                     <>
                         <li>
-                            <NavLink to='/admin/enemigos' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                            <NavLink to='/admin/enemigos' className={navLinkClass}>
                                 Enemigos
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to='/admin/usuarios' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                            <NavLink to='/admin/usuarios' className={navLinkClass}>
                                 Usuarios
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to='/admin/historial' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                            <NavLink to='/admin/historial' className={navLinkClass}>
                                 Historial
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to='/admin/nuevoAdmin' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                            <NavLink to='/admin/nuevoAdmin' className={navLinkClass}>
                                 Nuevo Admin
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to='/admin/estadisticas' className={({ isActive }) => isActive ? 'activo' : 'normal'}>
+                            <NavLink to='/admin/estadisticas' className={navLinkClass}>
                                 Estadísticas
                             </NavLink>
                         </li>

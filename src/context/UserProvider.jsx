@@ -1,18 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { useNavigate } from 'react-router'
 import { UserContext } from './UserContext'
 import { useFetch } from '../hooks/useFetch'
 
-/**
- * Proveedor de contexto de autenticación.
- * Expone métodos de login, registro, logout y renovación de token,
- * así como los estados `usuario` (id y rol) e `isLogued`.
- *
- * Tras login/register/renovar, observa el estado `data` de useFetch
- * y redirige automáticamente según el rol del usuario.
- *
- * @param {{ children: React.ReactNode }} props
- */
 export const UserProvider = ({ children }) => {
     const navigate = useNavigate()
     const BASE_URL = import.meta.env.VITE_URL_RENDER
@@ -23,14 +13,16 @@ export const UserProvider = ({ children }) => {
     const [isLogued, setIsLogued] = useState(false)
     const [checking, setChecking] = useState(true)
 
+    const borrarToken = useCallback(async () => {
+        try {
+            await consultaApi(`${BASE_URL}/public/delete`, { method: 'GET' })
+        } catch {
+        } finally {
+            setChecking(false)
+        }
+    }, [consultaApi, BASE_URL])
 
-    /**
-     * Inicia sesión: envía credenciales al backend.
-     * La cookie httpOnly se recibe y almacena automáticamente.
-     *
-     * @param {{ email: string, password: string }} user
-     */
-    const logIn = async (user) => {
+    const logIn = useCallback(async (user) => {
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json; charset=UTF-8' },
@@ -38,25 +30,17 @@ export const UserProvider = ({ children }) => {
         }
         await consultaApi(`${BASE_URL}/public`, options)
         setChecking(false)
-    }
+    }, [consultaApi, BASE_URL])
 
-    /**
-     * Cierra sesión: elimina la cookie en el backend y limpia el estado local.
-     */
-    const logOut = () => {
+    const logOut = useCallback(() => {
         clearFetch()
         setUsuario(null)
         setIsLogued(false)
         navigate('/registro')
         borrarToken()
-    }
+    }, [clearFetch, navigate, borrarToken])
 
-    /**
-     * Registra un nuevo usuario (rol 'user' o 'admin' según el campo `rol`).
-     *
-     * @param {{ nombre: string, apodo?: string, email: string, password: string, rol?: string }} user
-     */
-    const register = async (user) => {
+    const register = useCallback(async (user) => {
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json; charset=UTF-8' },
@@ -64,20 +48,7 @@ export const UserProvider = ({ children }) => {
         }
         await consultaApi(`${BASE_URL}/public/new`, options)
         setChecking(false)
-    }
-
-    /**
-     * Renueva la sesión usando la cookie existente.
-     * Se ejecuta automáticamente al montar el provider (equivalente a auto-login).
-     */
-    const borrarToken = async () => {
-        try {
-            await consultaApi(`${BASE_URL}/public/delete`, { method: 'GET' })
-        } catch {
-        } finally {
-            setChecking(false)
-        }
-    }
+    }, [consultaApi, BASE_URL])
 
     useEffect(() => {
         if (!data?.data?.id) return
@@ -88,9 +59,12 @@ export const UserProvider = ({ children }) => {
         setChecking(false)
     }, [data])
 
+    const contextValue = useMemo(() => ({
+        usuario, isLogued, checking, logIn, logOut, register, data, loading, error, clearFetch
+    }), [usuario, isLogued, checking, logIn, logOut, register, data, loading, error, clearFetch])
+
     return (
-        <UserContext.Provider
-            value={{ usuario, isLogued, checking, logIn, logOut, register, data, loading, error, clearFetch }}>
+        <UserContext.Provider value={contextValue}>
             {children}
         </UserContext.Provider>
     )

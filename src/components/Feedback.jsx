@@ -5,9 +5,10 @@ import './Feedback.scss'
 export const Feedback = () => {
     const { loading, error, data } = useContext(UserContext)
     const [visible, setVisible] = useState(false)
+    const mensaje = data?.data?.msg
 
     useEffect(() => {
-        if (loading || error || data?.data?.msg) {
+        if (loading || error || mensaje) {
             setVisible(true)
 
             const timer = setTimeout(() => {
@@ -16,7 +17,7 @@ export const Feedback = () => {
 
             return () => clearTimeout(timer)
         }
-    }, [loading, error, data])
+    }, [loading, error, mensaje])
 
     if (!visible) return <></>
 

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useFormularios } from '../../hooks/useFormularios'
 import { useFetch } from '../../hooks/useFetch'
-import caballeroTranquilo from '../../assets/Caballero_tranquilo.jpg'
 import './UserPersonaje.scss'
 
 export const UserPersonaje = () => {
@@ -82,7 +81,7 @@ export const UserPersonaje = () => {
 
             <div className='flexContainer'>
                 <div className='imgContainer'>
-                    <img src={caballeroTranquilo} alt='Caballero tranquilo'></img>
+                    <img src="https://res.cloudinary.com/dymas3eqs/image/upload/f_auto/v1782226455/imagenes/caballero_tranquilo.jpg" alt='Caballero tranquilo' />
                 </div>
 
                 <div className='statContainer'>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 
 /**
  * Hook personalizado para peticiones HTTP con gestión de estado.
@@ -13,18 +13,8 @@ export const useFetch = () => {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
-    const BASE_URL = import.meta.env.VITE_URL_RENDER
 
-
-    /**
-     * Ejecuta una petición HTTP con fetch.
-     * Asigna automáticamente `credentials: 'include'` para enviar cookies.
-     * Actualiza `data`, `loading` y `error` según el resultado.
-     *
-     * @param {string} url  - Endpoint al que realizar la petición
-     * @param {object} opciones - Opciones de fetch (method, headers, body, etc.)
-     */
-    const consultaApi = async (url, opciones) => {
+    const consultaApi = useCallback(async (url, opciones) => {
         setLoading(true)
         setError(null)
         setData(null)
@@ -44,16 +34,13 @@ export const useFetch = () => {
         } finally {
             setLoading(false)
         }
-    }
+    }, [])
 
-    /**
-     * Reinicia los tres estados (data, loading, error) a sus valores iniciales.
-     */
-    const clearFetch = () => {
+    const clearFetch = useCallback(() => {
         setData(null)
         setError(null)
         setLoading(false)
-    }
+    }, [])
 
     return { data, loading, error, consultaApi, clearFetch }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useFetch } from '../../hooks/useFetch'
 import { Feedback, FormularioStats, TablaGenerica } from '../index'
 import './AdminEnemigos.scss'
@@ -67,6 +67,24 @@ export const AdminEnemigos = () => {
         cargarEnemigos()
     }, [])
 
+    const initialValues = useMemo(() =>
+        editando ? {
+            nombre: editando.nombre,
+            vida: String(editando.vida),
+            ataque: String(editando.ataque),
+            defensa: String(editando.defensa),
+            velocidad: String(editando.velocidad),
+            tipo: editando.tipo,
+            url: editando.url
+        } : undefined,
+        [editando]
+    )
+
+    const acciones = useMemo(() => [
+        { nombre: 'Editar', onClick: (enemigo) => abrirFormEditar(enemigo), clase: 'btn-editar' },
+        { nombre: 'Borrar', onClick: (enemigo) => eliminar(enemigo.id), clase: 'btn-eliminar' }
+    ], [])
+
     return (
         <div className="admin-enemigos">
             <div className="header">
@@ -77,15 +95,7 @@ export const AdminEnemigos = () => {
             {formVisible && (
                 <FormularioStats
                     key={editando?.id ?? 'crear'}
-                    initialValues={editando ? {
-                        nombre: editando.nombre,
-                        vida: String(editando.vida),
-                        ataque: String(editando.ataque),
-                        defensa: String(editando.defensa),
-                        velocidad: String(editando.velocidad),
-                        tipo: editando.tipo,
-                        url: editando.url
-                    } : undefined}
+                    initialValues={initialValues}
                     onSubmit={handleSubmit}
                     onCancel={() => setFormVisible(false)}
                     isEditando={!!editando}
@@ -98,20 +108,7 @@ export const AdminEnemigos = () => {
                         datos={enemigos}
                         columnas={['Nombre', 'Vida', 'Ataque', 'Defensa', 'Velocidad', 'Tipo']}
                         llaves={['nombre', 'vida', 'ataque', 'defensa', 'velocidad', 'tipo']}
-                        acciones={
-                            [
-                                {
-                                    nombre: 'Editar',
-                                    onClick: (enemigo) => abrirFormEditar(enemigo),
-                                    clase: 'btn-editar'
-                                },
-                                {
-                                    nombre: 'Borrar',
-                                    onClick: (enemigo) => eliminar(enemigo.id),
-                                    clase: 'btn-eliminar'
-                                }
-                            ]
-                        }
+                        acciones={acciones}
                     />
                 </>
             )}
