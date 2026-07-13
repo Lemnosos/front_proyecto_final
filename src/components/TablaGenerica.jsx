@@ -1,9 +1,27 @@
-import { useState, useMemo, memo } from 'react'
+import { useState, useEffect, useMemo, memo } from 'react'
 import './TablaGenerica.scss'
 
 export const TablaGenerica = memo(({ datos = [], columnas = [], llaves, acciones = [] }) => {
     const [paginaActual, setPaginaActual] = useState(1)
     const [itemsPorPagina, setItemsPorPagina] = useState(10)
+    const [tier, setTier] = useState('desktop')
+
+    useEffect(() => {
+        const mqPhone = window.matchMedia('(max-width: 768px)')
+        const mqTablet = window.matchMedia('(max-width: 1024px)')
+        const actualizar = () => {
+            if (mqPhone.matches) setTier('phone')
+            else if (mqTablet.matches) setTier('tablet')
+            else setTier('desktop')
+        }
+        actualizar()
+        mqPhone.addEventListener('change', actualizar)
+        mqTablet.addEventListener('change', actualizar)
+        return () => {
+            mqPhone.removeEventListener('change', actualizar)
+            mqTablet.removeEventListener('change', actualizar)
+        }
+    }, [])
 
     const totalPaginas = itemsPorPagina === Infinity ? 1 : Math.ceil(datos.length / itemsPorPagina)
     const inicio = (paginaActual - 1) * itemsPorPagina
@@ -21,10 +39,40 @@ export const TablaGenerica = memo(({ datos = [], columnas = [], llaves, acciones
     }
 
     const numerosPagina = useMemo(() => {
-        const arr = []
-        for (let i = 1; i <= totalPaginas; i++) arr.push(i)
-        return arr
-    }, [totalPaginas])
+        if (totalPaginas <= 6) return Array.from({ length: totalPaginas }, (_, i) => i + 1)
+
+        if (tier === 'phone') {
+            const res = [1]
+            if (paginaActual > 2) res.push('...')
+            if (paginaActual !== 1 && paginaActual !== totalPaginas) res.push(paginaActual)
+            if (paginaActual < totalPaginas - 1) res.push('...')
+            if (totalPaginas > 1) res.push(totalPaginas)
+            return res
+        }
+
+        if (tier === 'tablet') {
+            const res = [1, 2]
+            if (paginaActual > 4) res.push('...')
+            if (paginaActual > 2 && paginaActual < totalPaginas - 1) res.push(paginaActual)
+            if (paginaActual < totalPaginas - 3) res.push('...')
+            if (totalPaginas > 2) res.push(totalPaginas - 1, totalPaginas)
+            return [...new Set(res)]
+        }
+
+        const res = []
+        const inicio = Math.max(1, paginaActual - 1)
+        const fin = Math.min(totalPaginas, paginaActual + 1)
+        if (inicio > 1) {
+            res.push(1)
+            if (inicio > 2) res.push('...')
+        }
+        for (let i = inicio; i <= fin; i++) res.push(i)
+        if (fin < totalPaginas) {
+            if (fin < totalPaginas - 1) res.push('...')
+            res.push(totalPaginas)
+        }
+        return res
+    }, [tier, paginaActual, totalPaginas])
 
     if (datos.length === 0 && columnas.length === 0 && acciones.length === 0)
         return <p>No se puede generar la tabla</p>
@@ -85,14 +133,18 @@ export const TablaGenerica = memo(({ datos = [], columnas = [], llaves, acciones
                         &lt;&lt; Anterior
                     </button>
 
-                    {numerosPagina.map(num => (
-                        <button
-                            key={num}
-                            onClick={() => cambiarPagina(num)}
-                            className={paginaActual === num ? 'activo' : ''}
-                        >
-                            {num}
-                        </button>
+                    {numerosPagina.map((num, idx) => (
+                        num === '...' ? (
+                            <span key={`e-${idx}`} className="ellipsis">...</span>
+                        ) : (
+                            <button
+                                key={num}
+                                onClick={() => cambiarPagina(num)}
+                                className={paginaActual === num ? 'activo' : ''}
+                            >
+                                {num}
+                            </button>
+                        )
                     ))}
 
                     <button

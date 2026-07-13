@@ -156,7 +156,7 @@ export const UserPelea = () => {
                                     initial={{ scale: 0.5, opacity: 0 }}
                                     animate={{ scale: [1, 1.6, 1.2], opacity: [0, 1, 0] }}
                                     exit={{ scale: 0.5, opacity: 0 }}
-                                    transition={{ duration: 1.0 }}
+                                    transition={{ duration: 3 }}
                                 />
                             )}
 
@@ -166,7 +166,7 @@ export const UserPelea = () => {
                                     initial={{ scale: 0.5, opacity: 0 }}
                                     animate={{ scale: [1, 1.4, 1], opacity: [0, 1, 0.8] }}
                                     exit={{ scale: 0.5, opacity: 0 }}
-                                    transition={{ duration: 0.9 }}
+                                    transition={{ duration: 3 }}
                                 />
                             )}
 
@@ -249,7 +249,7 @@ export const UserPelea = () => {
                                     initial={{ scale: 0.5, opacity: 0 }}
                                     animate={{ scale: [1, 1.6, 1.2], opacity: [0, 1, 0] }}
                                     exit={{ scale: 0.5, opacity: 0 }}
-                                    transition={{ duration: 1.0 }}
+                                    transition={{ duration: 3 }}
                                 />
                             )}
 
@@ -259,7 +259,7 @@ export const UserPelea = () => {
                                     initial={{ scale: 0.5, opacity: 0 }}
                                     animate={{ scale: [1, 1.4, 1], opacity: [0, 1, 0.8] }}
                                     exit={{ scale: 0.5, opacity: 0 }}
-                                    transition={{ duration: 0.9 }}
+                                    transition={{ duration: 3 }}
                                 />
                             )}
 
@@ -270,7 +270,7 @@ export const UserPelea = () => {
                                     initial={{ scale: 0.3, opacity: 0, rotate: 45 }}
                                     animate={{ scale: [1, 1.3, 1], opacity: [0, 1, 0] }}
                                     exit={{ scale: 0.3, opacity: 0 }}
-                                    transition={{ duration: 0.8 }}
+                                    transition={{ duration: 3 }}
                                 />
                             )}
                         </AnimatePresence>
